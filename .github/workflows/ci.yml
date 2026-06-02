@@ -28,9 +28,6 @@ jobs:
   sonarcloud:
     name: SonarCloud Scan & Quality Gate
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: CoreUX
     steps:
       - name: Checkout CoreUX
         uses: actions/checkout@v4
@@ -55,8 +52,17 @@ jobs:
           cache: 'yarn'
           cache-dependency-path: CoreUX/yarn.lock
 
-      - name: Install dependencies
+      - name: Install Core dependencies
         run: YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
+        working-directory: Core
+
+      - name: Build Core monorepo packages
+        run: yarn build
+        working-directory: Core
+
+      - name: Install CoreUX dependencies
+        run: YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
+        working-directory: CoreUX
 
       - name: Cache Turborepo
         uses: actions/cache@v4
@@ -68,11 +74,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-turbo-
 
-      - name: Build monorepo packages
+      - name: Build CoreUX monorepo packages
         run: yarn build
+        working-directory: CoreUX
 
       - name: Run unit tests with coverage
         run: yarn test:coverage
+        working-directory: CoreUX
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarqube-scan-action@master
@@ -91,9 +99,6 @@ jobs:
       contents: write
       packages: write
       id-token: write
-    defaults:
-      run:
-        working-directory: CoreUX
     steps:
       - name: Checkout CoreUX
         uses: actions/checkout@v4
@@ -118,8 +123,17 @@ jobs:
           cache: 'yarn'
           cache-dependency-path: CoreUX/yarn.lock
 
-      - name: Install dependencies
+      - name: Install Core dependencies
         run: YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
+        working-directory: Core
+
+      - name: Build Core monorepo packages
+        run: yarn build
+        working-directory: Core
+
+      - name: Install CoreUX dependencies
+        run: YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
+        working-directory: CoreUX
 
       - name: Cache Turborepo
         uses: actions/cache@v4
@@ -138,9 +152,11 @@ jobs:
         run: |
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
           echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" >> ~/.npmrc
+        working-directory: CoreUX
 
       - name: Publish all changed packages
         run: yarn publish:all
+        working-directory: CoreUX
 
       - name: Sync with remote to prevent push rejection
         run: |
@@ -148,6 +164,7 @@ jobs:
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git fetch origin main
           git pull --rebase origin main --autostash
+        working-directory: CoreUX
 
       - name: Commit version bumps & hashes
         uses: stefanzweifel/git-auto-commit-action@v5 # NOSONAR
