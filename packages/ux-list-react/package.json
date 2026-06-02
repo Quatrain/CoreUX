@@ -1,5 +1,5 @@
 {
-  "name": "@quatrain/ui-list-react",
+  "name": "@quatrain/ux-list-react",
   "version": "1.1.4",
   "main": "src/index.ts",
   "license": "AGPL-3.0-only",
@@ -13,8 +13,8 @@
     "@quatrain/i18n": "*",
     "@quatrain/i18n-en": "*",
     "@quatrain/i18n-fr": "*",
-    "@quatrain/ui": "workspace:*",
-    "@quatrain/ui-list": "workspace:*"
+    "@quatrain/ux": "workspace:*",
+    "@quatrain/ux-list": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
@@ -28,7 +28,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Quatrain/CoreUI.git",
-    "directory": "packages/ui-list-react"
+    "url": "git+https://github.com/Quatrain/CoreUX.git",
+    "directory": "packages/ux-list-react"
   }
 }

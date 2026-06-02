@@ -1,6 +1,6 @@
-# HOWTO - Using @quatrain/ui-list-react
+# HOWTO - Using @quatrain/ux-list-react
 
-This guide details how to consume `@quatrain/ui-list-react` in your React applications. The package uses Mantine UI to generate gorgeous, responsive, and highly interactive data tables.
+This guide details how to consume `@quatrain/ux-list-react` in your React applications. The package uses Mantine UI to generate gorgeous, responsive, and highly interactive data tables.
 
 ---
 
@@ -30,7 +30,7 @@ Automatically infer columns, property types, and pagination from a raw Quatrain 
 
 ```tsx
 import React from 'react'
-import { CoreList } from '@quatrain/ui-list-react'
+import { CoreList } from '@quatrain/ux-list-react'
 import { User } from '@quatrain/core' // Quatrain Model
 import { myApiClient } from './apiClient'
 
@@ -56,7 +56,7 @@ Configure columns manually, hide pagination or filtering, display system metadat
 
 ```tsx
 import React from 'react'
-import { CoreList } from '@quatrain/ui-list-react'
+import { CoreList } from '@quatrain/ux-list-react'
 import { Company } from '@quatrain/core'
 import { myApiClient } from './apiClient'
 
@@ -114,7 +114,7 @@ export function CompanyDashboard() {
 
     return (
         <CoreList 
-            options={{ config: companyListConfig, apiClient: myApiClient }}
+            options={{ options: { config: companyListConfig, apiClient: myApiClient } }} // Note: options structure is dependent on core UI definitions
             title="Managed Companies"
             lang="fr" // Display interface in French
             onRowAction={handleActionClick}
@@ -131,7 +131,7 @@ Instead of using the default `<CoreList>` table component, you can consume the `
 
 ```tsx
 import React, { useState } from 'react'
-import { useCoreList } from '@quatrain/ui-list-react'
+import { useCoreList } from '@quatrain/ux-list-react'
 import { Task } from '@quatrain/core'
 import { 
     Table, 

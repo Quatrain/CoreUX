@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from 'react'
-import { CoreListManager, ListState, CoreListManagerOptions } from '@quatrain/ui-list'
+import { CoreListManager, ListState, CoreListManagerOptions } from '@quatrain/ux-list'
 
 /**
  * A React hook that binds to the framework-agnostic headless CoreListManager.

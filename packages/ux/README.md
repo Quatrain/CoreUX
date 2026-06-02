@@ -1,6 +1,6 @@
-# @quatrain/ui
+# @quatrain/ux
 
-The `@quatrain/ui` package is the foundational frontend layer of the Quatrain framework. It encapsulates the core styling and layout configurations required by all specific React component packages (like `ui-form-react`).
+The `@quatrain/ux` package is the foundational frontend layer of the Quatrain framework. It encapsulates the core styling and layout configurations required by all specific React component packages (like `ux-form-react`).
 
 ## Architecture
 - By default, it exports the **Mantine** component library, ensuring that any downstream UI packages share the exact same style context and theme configuration.
@@ -12,8 +12,8 @@ The `@quatrain/ui` package is the foundational frontend layer of the Quatrain fr
 To use it in your host application (like `studio-web`), wrap your root with the exported theme provider:
 
 ```tsx
-import { MantineProvider } from '@quatrain/ui';
-import '@quatrain/ui/core.css';
+import { MantineProvider } from '@quatrain/ux';
+import '@quatrain/ux/core.css';
 
 function App() {
   return (

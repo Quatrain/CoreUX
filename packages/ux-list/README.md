@@ -1,4 +1,4 @@
-# @quatrain/ui-list
+# @quatrain/ux-list
 
 Headless, framework-agnostic list and data table state manager for the Quatrain Core monorepo. It manages the querying, sorting, pagination, filtering, and model schema mapping independent of any UI framework.
 

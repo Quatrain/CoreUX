@@ -1,5 +1,5 @@
 {
-  "name": "@quatrain/ui-list",
+  "name": "@quatrain/ux-list",
   "version": "1.0.4",
   "main": "src/index.ts",
   "license": "AGPL-3.0-only",
@@ -11,8 +11,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Quatrain/CoreUI.git",
-    "directory": "packages/ui-list"
+    "url": "git+https://github.com/Quatrain/CoreUX.git",
+    "directory": "packages/ux-list"
   },
   "publishConfig": {
     "access": "public"

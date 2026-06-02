@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useCoreList } from './useCoreList'
-import { CoreListManager, ListState } from '@quatrain/ui-list'
+import { CoreListManager, ListState } from '@quatrain/ux-list'
 
 // Mock react hooks to execute synchronously without a full React renderer context
 jest.mock('react', () => {

@@ -789,9 +789,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@quatrain/core@portal:../Core/packages/core::locator=core-ui-monorepo%40workspace%3A.":
+"@quatrain/core@portal:../Core/packages/core::locator=core-ux-monorepo%40workspace%3A.":
   version: 0.0.0-use.local
-  resolution: "@quatrain/core@portal:../Core/packages/core::locator=core-ui-monorepo%40workspace%3A."
+  resolution: "@quatrain/core@portal:../Core/packages/core::locator=core-ux-monorepo%40workspace%3A."
   dependencies:
     "@quatrain/log": "workspace:*"
     "@quatrain/types": "workspace:*"
@@ -800,51 +800,51 @@ __metadata:
   languageName: node
   linkType: soft
 
-"@quatrain/i18n-en@portal:../Core/packages/i18n-en::locator=core-ui-monorepo%40workspace%3A.":
+"@quatrain/i18n-en@portal:../Core/packages/i18n-en::locator=core-ux-monorepo%40workspace%3A.":
   version: 0.0.0-use.local
-  resolution: "@quatrain/i18n-en@portal:../Core/packages/i18n-en::locator=core-ui-monorepo%40workspace%3A."
+  resolution: "@quatrain/i18n-en@portal:../Core/packages/i18n-en::locator=core-ux-monorepo%40workspace%3A."
   dependencies:
     "@quatrain/i18n": "workspace:*"
   languageName: node
   linkType: soft
 
-"@quatrain/i18n-fr@portal:../Core/packages/i18n-fr::locator=core-ui-monorepo%40workspace%3A.":
+"@quatrain/i18n-fr@portal:../Core/packages/i18n-fr::locator=core-ux-monorepo%40workspace%3A.":
   version: 0.0.0-use.local
-  resolution: "@quatrain/i18n-fr@portal:../Core/packages/i18n-fr::locator=core-ui-monorepo%40workspace%3A."
+  resolution: "@quatrain/i18n-fr@portal:../Core/packages/i18n-fr::locator=core-ux-monorepo%40workspace%3A."
   dependencies:
     "@quatrain/i18n": "workspace:*"
   languageName: node
   linkType: soft
 
-"@quatrain/i18n@portal:../Core/packages/i18n::locator=core-ui-monorepo%40workspace%3A.":
+"@quatrain/i18n@portal:../Core/packages/i18n::locator=core-ux-monorepo%40workspace%3A.":
   version: 0.0.0-use.local
-  resolution: "@quatrain/i18n@portal:../Core/packages/i18n::locator=core-ui-monorepo%40workspace%3A."
+  resolution: "@quatrain/i18n@portal:../Core/packages/i18n::locator=core-ux-monorepo%40workspace%3A."
   languageName: node
   linkType: soft
 
-"@quatrain/log@portal:../Core/packages/log::locator=core-ui-monorepo%40workspace%3A.":
+"@quatrain/log@portal:../Core/packages/log::locator=core-ux-monorepo%40workspace%3A.":
   version: 0.0.0-use.local
-  resolution: "@quatrain/log@portal:../Core/packages/log::locator=core-ui-monorepo%40workspace%3A."
+  resolution: "@quatrain/log@portal:../Core/packages/log::locator=core-ux-monorepo%40workspace%3A."
   dependencies:
     chalk: "npm:^4.1.2"
     loglevel: "npm:^1.9.2"
   languageName: node
   linkType: soft
 
-"@quatrain/types@portal:../Core/packages/types::locator=core-ui-monorepo%40workspace%3A.":
+"@quatrain/types@portal:../Core/packages/types::locator=core-ux-monorepo%40workspace%3A.":
   version: 0.0.0-use.local
-  resolution: "@quatrain/types@portal:../Core/packages/types::locator=core-ui-monorepo%40workspace%3A."
+  resolution: "@quatrain/types@portal:../Core/packages/types::locator=core-ux-monorepo%40workspace%3A."
   languageName: node
   linkType: soft
 
-"@quatrain/ui-form-react@workspace:packages/ui-form-react":
+"@quatrain/ux-form-react@workspace:packages/ux-form-react":
   version: 0.0.0-use.local
-  resolution: "@quatrain/ui-form-react@workspace:packages/ui-form-react"
+  resolution: "@quatrain/ux-form-react@workspace:packages/ux-form-react"
   dependencies:
     "@mantine/core": "npm:^7.11.1"
     "@mantine/hooks": "npm:^7.11.1"
     "@quatrain/core": "npm:*"
-    "@quatrain/ui": "workspace:*"
+    "@quatrain/ux": "workspace:*"
     "@tabler/icons-react": "npm:^3.10.0"
     "@types/react": "npm:^18.3.3"
     "@types/react-dom": "npm:^18.3.0"
@@ -857,17 +857,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@quatrain/ui-list-react@workspace:packages/ui-list-react":
+"@quatrain/ux-list-react@workspace:packages/ux-list-react":
   version: 0.0.0-use.local
-  resolution: "@quatrain/ui-list-react@workspace:packages/ui-list-react"
+  resolution: "@quatrain/ux-list-react@workspace:packages/ux-list-react"
   dependencies:
     "@mantine/core": "npm:^7.11.1"
     "@mantine/hooks": "npm:^7.11.1"
     "@quatrain/i18n": "npm:*"
     "@quatrain/i18n-en": "npm:*"
     "@quatrain/i18n-fr": "npm:*"
-    "@quatrain/ui": "workspace:*"
-    "@quatrain/ui-list": "workspace:*"
+    "@quatrain/ux": "workspace:*"
+    "@quatrain/ux-list": "workspace:*"
     "@types/react": "npm:^18.3.3"
     "@types/react-dom": "npm:^18.3.0"
     react: "npm:^18.3.1"
@@ -879,17 +879,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@quatrain/ui-list@workspace:*, @quatrain/ui-list@workspace:packages/ui-list":
+"@quatrain/ux-list@workspace:*, @quatrain/ux-list@workspace:packages/ux-list":
   version: 0.0.0-use.local
-  resolution: "@quatrain/ui-list@workspace:packages/ui-list"
+  resolution: "@quatrain/ux-list@workspace:packages/ux-list"
   dependencies:
     typescript: "npm:^5.2.2"
   languageName: unknown
   linkType: soft
 
-"@quatrain/ui@workspace:*, @quatrain/ui@workspace:packages/ui":
+"@quatrain/ux@workspace:*, @quatrain/ux@workspace:packages/ux":
   version: 0.0.0-use.local
-  resolution: "@quatrain/ui@workspace:packages/ui"
+  resolution: "@quatrain/ux@workspace:packages/ux"
   dependencies:
     "@mantine/core": "npm:^7.15.0"
     "@mantine/hooks": "npm:^7.15.0"
@@ -1537,9 +1537,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-ui-monorepo@workspace:.":
+"core-ux-monorepo@workspace:.":
   version: 0.0.0-use.local
-  resolution: "core-ui-monorepo@workspace:."
+  resolution: "core-ux-monorepo@workspace:."
   dependencies:
     "@tsconfig/recommended": "npm:^1.0.1"
     "@types/jest": "npm:^29.5.12"

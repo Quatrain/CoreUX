@@ -1,6 +1,6 @@
 {
-  "name": "core-ui-monorepo",
-  "description": "Core UI components and headless controllers monorepo",
+  "name": "core-ux-monorepo",
+  "description": "CoreUX components and headless controllers monorepo",
   "author": "Quatrain Développement SAS <developers@quatrain.com>",
   "license": "AGPL-3.0-only",
   "version": "1.0.0",

@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from 'react'
-import { CoreFormManager, FormState } from '@quatrain/ui'
+import { CoreFormManager, FormState } from '@quatrain/ux'
 
 /**
  * A React hook that provides an interface to the headless CoreFormManager.

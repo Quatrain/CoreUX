@@ -16,7 +16,7 @@ import {
     Tooltip
 } from '@mantine/core'
 import { useCoreList } from './useCoreList'
-import { CoreListManagerOptions } from '@quatrain/ui-list'
+import { CoreListManagerOptions } from '@quatrain/ux-list'
 import { Translator } from '@quatrain/i18n'
 import { enDictionary } from '@quatrain/i18n-en'
 import { frDictionary } from '@quatrain/i18n-fr'

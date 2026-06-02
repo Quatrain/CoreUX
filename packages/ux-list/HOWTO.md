@@ -1,6 +1,6 @@
-# HOWTO - Using @quatrain/ui-list
+# HOWTO - Using @quatrain/ux-list
 
-This document presents simple, medium, and complex usage scenarios of the headless, framework-agnostic `@quatrain/ui-list` package.
+This document presents simple, medium, and complex usage scenarios of the headless, framework-agnostic `@quatrain/ux-list` package.
 
 ---
 
@@ -9,7 +9,7 @@ This document presents simple, medium, and complex usage scenarios of the headle
 If you have a Quatrain model schema (with `PROPS_DEFINITION` or `properties`), the manager can automatically infer columns, pagination limits, and query targets.
 
 ```typescript
-import { CoreListManager } from '@quatrain/ui-list'
+import { CoreListManager } from '@quatrain/ux-list'
 import { User } from '@quatrain/core' // your Quatrain core model
 import { myApiClient } from './apiClient'
 
@@ -43,7 +43,7 @@ Exposer classes represent list/table controller models in a domain-driven struct
 ### Define the Exposer Class
 
 ```typescript
-import { CoreList } from '@quatrain/ui-list'
+import { CoreList } from '@quatrain/ux-list'
 import { Company } from '@quatrain/core'
 
 @CoreList({
@@ -74,7 +74,7 @@ export class CompanyListExposer {
 ### Consume the Decorated Exposer
 
 ```typescript
-import { CoreListManager } from '@quatrain/ui-list'
+import { CoreListManager } from '@quatrain/ux-list'
 import { CompanyListExposer } from './CompanyListExposer'
 import { myApiClient } from './apiClient'
 
@@ -99,7 +99,7 @@ manager.setFilters({ status: 'active' })
 For advanced needs, such as integrating compound search strings, handling non-standard query structures, or fetching data through nested RPC operations, override the querying channel using `fetchFunction`.
 
 ```typescript
-import { CoreListManager, ListState } from '@quatrain/ui-list'
+import { CoreListManager, ListState } from '@quatrain/ux-list'
 import { Project } from '@quatrain/core'
 
 // Imagine we need a list displaying projects, but it requires a custom payload
