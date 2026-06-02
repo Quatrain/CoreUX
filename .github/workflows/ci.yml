@@ -28,11 +28,22 @@ jobs:
   sonarcloud:
     name: SonarCloud Scan & Quality Gate
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: CoreUX
     steps:
-      - name: Checkout repository
+      - name: Checkout CoreUX
         uses: actions/checkout@v4
         with:
+          path: CoreUX
           fetch-depth: 0 # Disable shallow clone for accurate SonarQube blame/authorship
+
+      - name: Checkout Core
+        uses: actions/checkout@v4
+        with:
+          repository: Quatrain/Core
+          path: Core
+          fetch-depth: 1
 
       - name: Enable Corepack
         run: corepack enable
@@ -42,6 +53,7 @@ jobs:
         with:
           node-version: 22
           cache: 'yarn'
+          cache-dependency-path: CoreUX/yarn.lock
 
       - name: Install dependencies
         run: YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
@@ -50,8 +62,8 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            .turbo
-            node_modules/.cache/turbo
+            CoreUX/.turbo
+            CoreUX/node_modules/.cache/turbo
           key: ${{ runner.os }}-turbo-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-turbo-
@@ -64,6 +76,8 @@ jobs:
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarqube-scan-action@master
+        with:
+          projectBaseDir: CoreUX
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -77,11 +91,22 @@ jobs:
       contents: write
       packages: write
       id-token: write
+    defaults:
+      run:
+        working-directory: CoreUX
     steps:
-      - name: Checkout repository
+      - name: Checkout CoreUX
         uses: actions/checkout@v4
         with:
+          path: CoreUX
           fetch-depth: 0
+
+      - name: Checkout Core
+        uses: actions/checkout@v4
+        with:
+          repository: Quatrain/Core
+          path: Core
+          fetch-depth: 1
 
       - name: Enable Corepack
         run: corepack enable
@@ -91,6 +116,7 @@ jobs:
         with:
           node-version: 22
           cache: 'yarn'
+          cache-dependency-path: CoreUX/yarn.lock
 
       - name: Install dependencies
         run: YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
@@ -99,8 +125,8 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            .turbo
-            node_modules/.cache/turbo
+            CoreUX/.turbo
+            CoreUX/node_modules/.cache/turbo
           key: ${{ runner.os }}-turbo-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-turbo-
@@ -126,5 +152,6 @@ jobs:
       - name: Commit version bumps & hashes
         uses: stefanzweifel/git-auto-commit-action@v5 # NOSONAR
         with:
+          repository: CoreUX
           commit_message: "chore: release versions & update hashes [skip ci]"
           commit_options: '--no-verify'
