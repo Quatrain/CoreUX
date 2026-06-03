@@ -1,6 +1,6 @@
-# CoreUX - Frontend Architecture & UX Brick System for Quatrain
+# Core UX - Frontend Architecture & UX Brick System for Quatrain
 
-CoreUX is the frontend companion monorepo of the **Quatrain** ecosystem. It provides headless state controllers, React bindings, and UI components built on top of **Mantine UI**. 
+Core UX is the frontend companion monorepo of the **Quatrain** ecosystem. It provides headless state controllers, React bindings, and UI components built on top of **Mantine UI**. 
 
 Following a strict **MVC (Model-View-Controller)** pattern, CoreUX decouples business logic, data validation, and visual rendering. Heavy state management, filtering, and model handling reside in headless, framework-agnostic controllers, keeping your React components lightweight, pure, and easy to maintain.
 
@@ -17,7 +17,7 @@ Following a strict **MVC (Model-View-Controller)** pattern, CoreUX decouples bus
 
 ## 📦 Monorepo Architecture & Packages
 
-CoreUX is managed as a Yarn monorepo under `packages/`:
+Core UX is managed as a Yarn monorepo under `packages/`:
 
 ### 🧠 Headless Core & Controllers
 
