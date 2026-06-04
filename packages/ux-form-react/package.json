@@ -1,6 +1,6 @@
 {
   "name": "@quatrain/ux-form-react",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "AGPL-3.0-only",
