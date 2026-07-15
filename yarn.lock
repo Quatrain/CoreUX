@@ -887,6 +887,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@quatrain/ux-react@workspace:packages/ux-react":
+  version: 0.0.0-use.local
+  resolution: "@quatrain/ux-react@workspace:packages/ux-react"
+  peerDependencies:
+    react: ^18.0.0 || ^19.0.0
+    react-dom: ^18.0.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
 "@quatrain/ux@workspace:*, @quatrain/ux@workspace:packages/ux":
   version: 0.0.0-use.local
   resolution: "@quatrain/ux@workspace:packages/ux"
@@ -897,6 +906,14 @@ __metadata:
   peerDependencies:
     react: ^18.3.1
     react-dom: ^18.3.1
+  languageName: unknown
+  linkType: soft
+
+"@quatrain/voice@workspace:packages/voice":
+  version: 0.0.0-use.local
+  resolution: "@quatrain/voice@workspace:packages/voice"
+  dependencies:
+    typescript: "npm:^5.2.2"
   languageName: unknown
   linkType: soft
 
