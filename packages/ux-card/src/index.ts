@@ -1,3 +1,2 @@
 export * from './types'
-export * from './styles'
-export * from './renderCard'
+export * from './CoreCardManager'
