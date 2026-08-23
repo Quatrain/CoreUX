@@ -19,7 +19,7 @@ import {
   IconPlus,
   IconSearch
 } from '@tabler/icons-react'
-import { TaxonomyController, TaxonomyNode } from './TaxonomyController'
+import { TaxonomyController, type TaxonomyNode } from './TaxonomyController'
 
 /**
  * Properties for rendering the ThematicTree component.

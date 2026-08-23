@@ -11,8 +11,8 @@ import {
   TypographyStylesProvider
 } from '@mantine/core'
 import { IconFileTypePdf, IconFileText, IconSparkles } from '@tabler/icons-react'
-import { OKFMetadataForm, OKFDocumentMetadata } from './OKFMetadataForm'
-import { TaxonomyNode } from '@quatrain/ux-taxonomy'
+import { OKFMetadataForm, type OKFDocumentMetadata } from './OKFMetadataForm'
+import type { TaxonomyNode } from '@quatrain/ux-taxonomy'
 
 export interface CurationCardProps {
   /** The document item being curated */

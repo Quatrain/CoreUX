@@ -1,6 +1,6 @@
 import React from 'react'
 import { Group, Badge, Text, Box } from '@mantine/core'
-import { TaxonomyNode } from './TaxonomyController'
+import type { TaxonomyNode } from './TaxonomyController'
 
 export interface ThematicBadgeGroupProps {
   /** Available taxonomy nodes / thematics */

@@ -16,7 +16,7 @@ import {
   Divider
 } from '@mantine/core'
 import { IconDeviceFloppy, IconCheck, IconEye, IconEdit, IconTags } from '@tabler/icons-react'
-import { ThematicBadgeGroup, TaxonomyNode } from '@quatrain/ux-taxonomy'
+import { ThematicBadgeGroup, type TaxonomyNode } from '@quatrain/ux-taxonomy'
 
 /**
  * Data structure representing curated OKF document metadata.
