@@ -89,8 +89,11 @@ export const FileIngestDropzone: React.FC<FileIngestDropzoneProps> = ({
   const displayItems = (items && items.length > 0) ? items : (tasks || [])
 
   const handleDrop = (files: FileWithPath[]) => {
-    if (onDropFiles) onDropFiles(files)
-    if (onFilesSelected) onFilesSelected(files)
+    if (onDropFiles) {
+      onDropFiles(files)
+    } else if (onFilesSelected) {
+      onFilesSelected(files)
+    }
   }
 
   const formatSize = (bytes: number) => {
