@@ -46,9 +46,13 @@ export interface IngestFileItem {
  */
 export interface FileIngestDropzoneProps extends Partial<DropzoneProps> {
   /** Callback fired when files are dropped or selected */
-  onDropFiles: (files: FileWithPath[]) => void
+  onDropFiles?: (files: FileWithPath[]) => void
+  /** Alias callback fired when files are dropped or selected */
+  onFilesSelected?: (files: File[]) => void
   /** List of currently queued or processing file items */
   items?: IngestFileItem[]
+  /** Alias list of queued or processing tasks */
+  tasks?: IngestFileItem[]
   /** Optional callback to remove a queued file item */
   onRemoveItem?: (id: string) => void
   /** Primary label */
@@ -70,16 +74,25 @@ export interface FileIngestDropzoneProps extends Partial<DropzoneProps> {
  */
 export const FileIngestDropzone: React.FC<FileIngestDropzoneProps> = ({
   onDropFiles,
+  onFilesSelected,
   items = [],
+  tasks = [],
   onRemoveItem,
   title = 'Glissez-déposez vos documents ici',
-  description = 'PDF, EPUB, Markdown ou images jusqu’à 50 Mo',
+  description = 'PDF, EPUB, Markdown ou images jusqu’à 50 Mo (cliquez pour parcourir)',
   maxSize = 50 * 1024 * 1024,
-  accept = [...PDF_MIME_TYPE, ...IMAGE_MIME_TYPE, 'text/plain', 'text/markdown'],
+  accept = ['application/pdf', '.pdf', 'application/epub+zip', '.epub', 'text/plain', 'text/markdown', '.md', '.txt', 'image/*'],
   className = '',
   style,
   ...dropzoneProps
 }) => {
+  const displayItems = (items && items.length > 0) ? items : (tasks || [])
+
+  const handleDrop = (files: FileWithPath[]) => {
+    if (onDropFiles) onDropFiles(files)
+    if (onFilesSelected) onFilesSelected(files)
+  }
+
   const formatSize = (bytes: number) => {
     if (bytes < 1024) return `${bytes} B`
     if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
@@ -99,7 +112,10 @@ export const FileIngestDropzone: React.FC<FileIngestDropzoneProps> = ({
   return (
     <Box className={`q-file-ingest-dropzone ${className}`} style={style}>
       <Dropzone
-        onDrop={onDropFiles}
+        onDrop={handleDrop}
+        onReject={(rejections) => {
+          console.warn('[Dropzone] Rejections:', rejections)
+        }}
         maxSize={maxSize}
         accept={accept}
         p="xl"
@@ -137,9 +153,9 @@ export const FileIngestDropzone: React.FC<FileIngestDropzoneProps> = ({
         </Group>
       </Dropzone>
 
-      {items.length > 0 && (
+      {displayItems.length > 0 && (
         <Stack gap="xs" mt="md">
-          {items.map((item) => (
+          {displayItems.map((item) => (
             <Paper key={item.id} withBorder p="xs" radius="sm">
               <Group justify="space-between" wrap="nowrap">
                 <Group gap="sm" wrap="nowrap" style={{ flex: 1, minWidth: 0 }}>
