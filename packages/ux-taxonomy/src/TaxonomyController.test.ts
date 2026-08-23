@@ -113,4 +113,39 @@ describe('TaxonomyController', () => {
     controller.toggleExpand('soil-health')
     expect(controller.isExpanded('soil-health')).toBe(false)
   })
+
+  it('manages multi-axial facet filters and matches items', () => {
+    const controller = new TaxonomyController({ initialNodes: sampleNodes })
+
+    controller.setFacetFilter('soils', ['argilo-calcaire', 'limoneux'])
+    controller.setFacetFilter('climates', ['mediterraneen'])
+
+    expect(controller.getFacetFilter('soils')).toEqual(['argilo-calcaire', 'limoneux'])
+    expect(controller.getFacetFilter('climates')).toEqual(['mediterraneen'])
+    expect(controller.getAllFacetFilters()).toEqual({
+      soils: ['argilo-calcaire', 'limoneux'],
+      climates: ['mediterraneen']
+    })
+
+    const matchingDoc = {
+      category: 'soil-health',
+      thematics: ['soil-health'],
+      soils: ['argilo-calcaire'],
+      climates: ['mediterraneen', 'semi-aride']
+    }
+
+    const nonMatchingDoc = {
+      category: 'soil-health',
+      thematics: ['soil-health'],
+      soils: ['sableux'],
+      climates: ['mediterraneen']
+    }
+
+    expect(controller.matchesFilters(matchingDoc)).toBe(true)
+    expect(controller.matchesFilters(nonMatchingDoc)).toBe(false)
+
+    controller.clearFacetFilters()
+    expect(controller.getAllFacetFilters()).toEqual({})
+    expect(controller.matchesFilters(nonMatchingDoc)).toBe(true)
+  })
 })

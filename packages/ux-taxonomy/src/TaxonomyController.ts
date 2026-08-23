@@ -44,6 +44,7 @@ export class TaxonomyController {
   protected nodes: Map<string, TaxonomyNode> = new Map()
   protected selectedIds: Set<string> = new Set()
   protected expandedIds: Set<string> = new Set()
+  protected facetFilters: Map<string, Set<string>> = new Map()
   protected listeners: Set<TaxonomyListener> = new Set()
   protected multiSelect: boolean
 
@@ -283,6 +284,83 @@ export class TaxonomyController {
     return () => {
       this.listeners.delete(listener)
     }
+  }
+
+  /**
+   * Sets or updates active filter values for a specific multi-axial facet axis (e.g., 'soils', 'climates').
+   * 
+   * @param axis - The facet axis identifier (e.g. 'soils', 'climates', 'itineraries').
+   * @param values - Array of selected facet values.
+   */
+  public setFacetFilter(axis: string, values: string[]): void {
+    if (!values || values.length === 0) {
+      this.facetFilters.delete(axis)
+    } else {
+      this.facetFilters.set(axis, new Set(values))
+    }
+    this.notify()
+  }
+
+  /**
+   * Retrieves active filter values for a specific facet axis.
+   * 
+   * @param axis - The facet axis identifier.
+   * @returns Array of active facet values.
+   */
+  public getFacetFilter(axis: string): string[] {
+    const set = this.facetFilters.get(axis)
+    return set ? Array.from(set) : []
+  }
+
+  /**
+   * Retrieves all active multi-axial facet filters.
+   * 
+   * @returns Key-value map of axis name to selected filter values array.
+   */
+  public getAllFacetFilters(): Record<string, string[]> {
+    const res: Record<string, string[]> = {}
+    for (const [axis, set] of this.facetFilters.entries()) {
+      if (set.size > 0) {
+        res[axis] = Array.from(set)
+      }
+    }
+    return res
+  }
+
+  /**
+   * Clears all active multi-axial facet filters.
+   */
+  public clearFacetFilters(): void {
+    this.facetFilters.clear()
+    this.notify()
+  }
+
+  /**
+   * Tests whether an item's multi-axial facets match the currently active filters.
+   * 
+   * @param itemFacets - Document facet metadata (e.g. { soils: ['argilo-calcaire'], climates: ['mediterraneen'] }).
+   * @returns True if the item satisfies all active facet criteria.
+   */
+  public matchesFilters(itemFacets: Record<string, any>): boolean {
+    // 1. Check thematic selection
+    if (this.selectedIds.size > 0) {
+      const selected = Array.from(this.selectedIds)
+      const itemThematics = Array.isArray(itemFacets.thematics) ? itemFacets.thematics : [itemFacets.category].filter(Boolean)
+      const matchesThematic = selected.some(s => itemThematics.includes(s) || itemFacets.category === s)
+      if (!matchesThematic) return false
+    }
+
+    // 2. Check each multi-axial facet
+    for (const [axis, filterSet] of this.facetFilters.entries()) {
+      if (filterSet.size === 0) continue
+      const itemVals = itemFacets[axis]
+      if (!itemVals) return false
+      const itemValArray = Array.isArray(itemVals) ? itemVals : [itemVals]
+      const hasMatch = itemValArray.some((v: string) => filterSet.has(v))
+      if (!hasMatch) return false
+    }
+
+    return true
   }
 
   protected notify(): void {

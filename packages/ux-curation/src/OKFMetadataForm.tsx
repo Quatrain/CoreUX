@@ -29,6 +29,13 @@ export interface OKFDocumentMetadata {
   category: string
   tags: string[]
   thematics?: string[]
+  soils?: string[]
+  climates?: string[]
+  latitudes?: string[]
+  altitudes?: string[]
+  itineraries?: string[]
+  soa?: string
+  revision?: string
   properNouns?: string[]
   timestamp?: string
   documentDate?: string
@@ -70,6 +77,13 @@ export const OKFMetadataForm: React.FC<OKFMetadataFormProps> = ({
   const [description, setDescription] = useState(initialValues.description || '')
   const [tags, setTags] = useState<string[]>(initialValues.tags || [])
   const [selectedThematics, setSelectedThematics] = useState<string[]>(initialValues.thematics || [])
+  const [soils, setSoils] = useState<string[]>(initialValues.soils || [])
+  const [climates, setClimates] = useState<string[]>(initialValues.climates || [])
+  const [latitudes, setLatitudes] = useState<string[]>(initialValues.latitudes || [])
+  const [altitudes, setAltitudes] = useState<string[]>(initialValues.altitudes || [])
+  const [itineraries, setItineraries] = useState<string[]>(initialValues.itineraries || [])
+  const [soa, setSoa] = useState(initialValues.soa || 'bradtech/world-agronomy')
+  const [revision, setRevision] = useState(initialValues.revision || 'rev-1.0.0')
   const [source, setSource] = useState(initialValues.source || '')
   const [documentDate, setDocumentDate] = useState(initialValues.documentDate || '')
 
@@ -82,6 +96,8 @@ export const OKFMetadataForm: React.FC<OKFMetadataFormProps> = ({
   }
 
   const generatedYaml = `---
+soa: "${soa}"
+revision: "${revision}"
 type: ${type}
 title: "${title.replace(/"/g, '\\"')}"
 description: "${description.replace(/"/g, '\\"')}"
@@ -89,6 +105,11 @@ category: ${category}
 tags:
 ${tags.map((t) => `  - ${t}`).join('\n')}
 ${selectedThematics.length > 0 ? `thematics:\n${selectedThematics.map((th) => `  - ${th}`).join('\n')}` : ''}
+${soils.length > 0 ? `soils:\n${soils.map((s) => `  - ${s}`).join('\n')}` : ''}
+${climates.length > 0 ? `climates:\n${climates.map((c) => `  - ${c}`).join('\n')}` : ''}
+${latitudes.length > 0 ? `latitudes:\n${latitudes.map((l) => `  - ${l}`).join('\n')}` : ''}
+${altitudes.length > 0 ? `altitudes:\n${altitudes.map((a) => `  - ${a}`).join('\n')}` : ''}
+${itineraries.length > 0 ? `itineraries:\n${itineraries.map((it) => `  - ${it}`).join('\n')}` : ''}
 ${documentDate ? `documentDate: "${documentDate}"` : ''}
 ${source ? `source: "${source.replace(/"/g, '\\"')}"` : ''}
 timestamp: "${initialValues.timestamp || new Date().toISOString()}"
@@ -104,6 +125,13 @@ timestamp: "${initialValues.timestamp || new Date().toISOString()}"
       description,
       tags,
       thematics: selectedThematics,
+      soils,
+      climates,
+      latitudes,
+      altitudes,
+      itineraries,
+      soa,
+      revision,
       properNouns: initialValues.properNouns || [],
       source,
       documentDate,
@@ -193,17 +221,64 @@ timestamp: "${initialValues.timestamp || new Date().toISOString()}"
 
               <Group grow>
                 <TextInput
-                  label="Source / Auteur / Organisme"
-                  placeholder="Ex: INRAE, Chambres d'Agriculture, FAO"
-                  value={source}
-                  onChange={(e) => setSource(e.currentTarget.value)}
+                  label="Source d'Autorité (SOA)"
+                  description="Dépôt d'origine certifié"
+                  placeholder="bradtech/world-agronomy"
+                  value={soa}
+                  onChange={(e) => setSoa(e.currentTarget.value)}
+                  required
                 />
 
                 <TextInput
-                  label="Date du document"
-                  placeholder="AAAA-MM-JJ"
-                  value={documentDate}
-                  onChange={(e) => setDocumentDate(e.currentTarget.value)}
+                  label="Numéro de Révision"
+                  description="Identifiant de version / Git SHA"
+                  placeholder="rev-1.0.0"
+                  value={revision}
+                  onChange={(e) => setRevision(e.currentTarget.value)}
+                  required
+                />
+              </Group>
+
+              <Divider my="xs" label="Axes de Classification Multi-Axiale Bradtech" labelPosition="center" />
+
+              <Group grow align="flex-start">
+                <TagsInput
+                  label="1. Types de Sols (soils)"
+                  description="argilo-calcaire, limoneux, sableux, glomaline..."
+                  placeholder="Ajouter un type de sol..."
+                  value={soils}
+                  onChange={setSoils}
+                />
+
+                <TagsInput
+                  label="2. Zones Climatiques (climates)"
+                  description="mediterraneen, oceanique, continental, semi-aride..."
+                  placeholder="Ajouter un climat..."
+                  value={climates}
+                  onChange={setClimates}
+                />
+              </Group>
+
+              <Group grow align="flex-start">
+                <TagsInput
+                  label="3. Zonage Géographique & Altitude (latitudes / altitudes)"
+                  description="40-45N, plaine-0-200m, colline-200-500m..."
+                  placeholder="Ajouter latitude/altitude..."
+                  value={[...latitudes, ...altitudes]}
+                  onChange={(vals) => {
+                    const lats = vals.filter(v => v.includes('N') || v.includes('S') || v.includes('lat'))
+                    const alts = vals.filter(v => !lats.includes(v))
+                    setLatitudes(lats.length > 0 ? lats : vals.slice(0, 1))
+                    setAltitudes(alts)
+                  }}
+                />
+
+                <TagsInput
+                  label="4. Itinéraires Techniques (itineraries)"
+                  description="viticulture-bio, enherbement-permanent, rouleau-faca..."
+                  placeholder="Ajouter un itinéraire technique..."
+                  value={itineraries}
+                  onChange={setItineraries}
                 />
               </Group>
 
