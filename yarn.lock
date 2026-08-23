@@ -762,7 +762,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mantine/core@npm:^7.11.1, @mantine/core@npm:^7.15.0":
+"@mantine/core@npm:^7.10.0, @mantine/core@npm:^7.11.1, @mantine/core@npm:^7.15.0":
   version: 7.17.8
   resolution: "@mantine/core@npm:7.17.8"
   dependencies:
@@ -780,7 +780,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mantine/hooks@npm:^7.11.1, @mantine/hooks@npm:^7.15.0":
+"@mantine/dropzone@npm:^7.10.0":
+  version: 7.17.8
+  resolution: "@mantine/dropzone@npm:7.17.8"
+  dependencies:
+    react-dropzone-esm: "npm:15.2.0"
+  peerDependencies:
+    "@mantine/core": 7.17.8
+    "@mantine/hooks": 7.17.8
+    react: ^18.x || ^19.x
+    react-dom: ^18.x || ^19.x
+  checksum: 10c0/6d80579b99e03ad5b66880689cc2813f590a891d65882b002d28f1290eacca4dd2d12405793999972165ab6a8347fb5a257eb45ad77dd9fa8f9e9a580d7e5eb3
+  languageName: node
+  linkType: hard
+
+"@mantine/hooks@npm:^7.10.0, @mantine/hooks@npm:^7.11.1, @mantine/hooks@npm:^7.15.0":
   version: 7.17.8
   resolution: "@mantine/hooks@npm:7.17.8"
   peerDependencies:
@@ -835,6 +849,79 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@quatrain/types@portal:../Core/packages/types::locator=core-ux-monorepo%40workspace%3A."
   languageName: node
+  linkType: soft
+
+"@quatrain/ux-card-react@workspace:packages/ux-card-react":
+  version: 0.0.0-use.local
+  resolution: "@quatrain/ux-card-react@workspace:packages/ux-card-react"
+  dependencies:
+    "@quatrain/ux-card": "workspace:*"
+    "@types/react": "npm:^18.3.3"
+    "@types/react-dom": "npm:^18.3.0"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
+    typescript: "npm:^5.2.2"
+  peerDependencies:
+    react: ^18.3.1
+    react-dom: ^18.3.1
+  languageName: unknown
+  linkType: soft
+
+"@quatrain/ux-card@workspace:*, @quatrain/ux-card@workspace:packages/ux-card":
+  version: 0.0.0-use.local
+  resolution: "@quatrain/ux-card@workspace:packages/ux-card"
+  dependencies:
+    "@quatrain/types": "workspace:*"
+    "@tsconfig/recommended": "npm:^1.0.1"
+    "@types/node": "npm:^22.10.1"
+    typescript: "npm:^5.2.2"
+  languageName: unknown
+  linkType: soft
+
+"@quatrain/ux-curation@workspace:packages/ux-curation":
+  version: 0.0.0-use.local
+  resolution: "@quatrain/ux-curation@workspace:packages/ux-curation"
+  dependencies:
+    "@mantine/core": "npm:^7.10.0"
+    "@mantine/hooks": "npm:^7.10.0"
+    "@quatrain/types": "workspace:*"
+    "@quatrain/ux-taxonomy": "workspace:*"
+    "@tabler/icons-react": "npm:^3.5.0"
+    "@types/jest": "npm:^29.5.12"
+    "@types/react": "npm:^18.3.3"
+    "@types/react-dom": "npm:^18.3.0"
+    jest: "npm:^29.7.0"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
+    ts-jest: "npm:^29.4.6"
+    typescript: "npm:^5.2.2"
+  peerDependencies:
+    react: ^18.3.1
+    react-dom: ^18.3.1
+  languageName: unknown
+  linkType: soft
+
+"@quatrain/ux-dropzone@workspace:packages/ux-dropzone":
+  version: 0.0.0-use.local
+  resolution: "@quatrain/ux-dropzone@workspace:packages/ux-dropzone"
+  dependencies:
+    "@mantine/core": "npm:^7.10.0"
+    "@mantine/dropzone": "npm:^7.10.0"
+    "@mantine/hooks": "npm:^7.10.0"
+    "@quatrain/types": "workspace:*"
+    "@tabler/icons-react": "npm:^3.5.0"
+    "@types/jest": "npm:^29.5.12"
+    "@types/react": "npm:^18.3.3"
+    "@types/react-dom": "npm:^18.3.0"
+    jest: "npm:^29.7.0"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
+    ts-jest: "npm:^29.4.6"
+    typescript: "npm:^5.2.2"
+  peerDependencies:
+    react: ^18.3.1
+    react-dom: ^18.3.1
+  languageName: unknown
   linkType: soft
 
 "@quatrain/ux-form-react@workspace:packages/ux-form-react":
@@ -896,6 +983,28 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@quatrain/ux-taxonomy@workspace:*, @quatrain/ux-taxonomy@workspace:packages/ux-taxonomy":
+  version: 0.0.0-use.local
+  resolution: "@quatrain/ux-taxonomy@workspace:packages/ux-taxonomy"
+  dependencies:
+    "@mantine/core": "npm:^7.10.0"
+    "@mantine/hooks": "npm:^7.10.0"
+    "@quatrain/types": "workspace:*"
+    "@tabler/icons-react": "npm:^3.5.0"
+    "@types/jest": "npm:^29.5.12"
+    "@types/react": "npm:^18.3.3"
+    "@types/react-dom": "npm:^18.3.0"
+    jest: "npm:^29.7.0"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
+    ts-jest: "npm:^29.4.6"
+    typescript: "npm:^5.2.2"
+  peerDependencies:
+    react: ^18.3.1
+    react-dom: ^18.3.1
+  languageName: unknown
+  linkType: soft
+
 "@quatrain/ux@workspace:*, @quatrain/ux@workspace:packages/ux":
   version: 0.0.0-use.local
   resolution: "@quatrain/ux@workspace:packages/ux"
@@ -953,10 +1062,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tabler/icons-react@npm:^3.5.0":
+  version: 3.46.0
+  resolution: "@tabler/icons-react@npm:3.46.0"
+  dependencies:
+    "@tabler/icons": "npm:3.46.0"
+  peerDependencies:
+    react: ">= 16"
+  checksum: 10c0/8fab7d3a9ec6b62724a1628b8bad68a7b503979e4418f97d057c442adc5257b227a08185a884d452d171983648e36fa92cd7bfe9457f693e9b67bbf4ecf8ec24
+  languageName: node
+  linkType: hard
+
 "@tabler/icons@npm:3.44.0":
   version: 3.44.0
   resolution: "@tabler/icons@npm:3.44.0"
   checksum: 10c0/0d5c1f9d6e68aa04c4a661e96035190e0884e0bc0022d31922efad3cfba210a25b2f013c0b6c0ab6aeb3d5a402a9b85a168966bd11a30ba6087f614f8521ccf3
+  languageName: node
+  linkType: hard
+
+"@tabler/icons@npm:3.46.0":
+  version: 3.46.0
+  resolution: "@tabler/icons@npm:3.46.0"
+  checksum: 10c0/c9671449c2f53fa7e329c487162f89a28417cdd5ce96cfa290fe21388724da303dd2297af3b39a88a74b02c36ce55598bc3cf6537dbddf548881da2c05f35f5e
   languageName: node
   linkType: hard
 
@@ -2693,7 +2820,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"loose-envify@npm:^1.1.0":
+"loose-envify@npm:^1.1.0, loose-envify@npm:^1.4.0":
   version: 1.4.0
   resolution: "loose-envify@npm:1.4.0"
   dependencies:
@@ -2894,6 +3021,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"object-assign@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "object-assign@npm:4.1.1"
+  checksum: 10c0/1f4df9945120325d041ccf7b86f31e8bcc14e73d29171e37a7903050e96b81323784ec59f93f102ec635bcf6fa8034ba3ea0a8c7e69fa202b87ae3b6cec5a414
+  languageName: node
+  linkType: hard
+
 "once@npm:^1.3.0":
   version: 1.4.0
   resolution: "once@npm:1.4.0"
@@ -3051,6 +3185,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"prop-types@npm:^15.8.1":
+  version: 15.8.1
+  resolution: "prop-types@npm:15.8.1"
+  dependencies:
+    loose-envify: "npm:^1.4.0"
+    object-assign: "npm:^4.1.1"
+    react-is: "npm:^16.13.1"
+  checksum: 10c0/59ece7ca2fb9838031d73a48d4becb9a7cc1ed10e610517c7d8f19a1e02fa47f7c27d557d8a5702bec3cfeccddc853579832b43f449e54635803f277b1c78077
+  languageName: node
+  linkType: hard
+
 "pure-rand@npm:^6.0.0":
   version: 6.1.0
   resolution: "pure-rand@npm:6.1.0"
@@ -3067,6 +3212,24 @@ __metadata:
   peerDependencies:
     react: ^18.3.1
   checksum: 10c0/a752496c1941f958f2e8ac56239172296fcddce1365ce45222d04a1947e0cc5547df3e8447f855a81d6d39f008d7c32eab43db3712077f09e3f67c4874973e85
+  languageName: node
+  linkType: hard
+
+"react-dropzone-esm@npm:15.2.0":
+  version: 15.2.0
+  resolution: "react-dropzone-esm@npm:15.2.0"
+  dependencies:
+    prop-types: "npm:^15.8.1"
+  peerDependencies:
+    react: ">= 16.8 || 18.0.0"
+  checksum: 10c0/a82dce547746f29214fa396e4060930250dd1b5f15c81e761035a05a09a1354493a90f79c1125c6341aee4b6226444bc7c7d29fc54ad266c149dfff170ef47a9
+  languageName: node
+  linkType: hard
+
+"react-is@npm:^16.13.1":
+  version: 16.13.1
+  resolution: "react-is@npm:16.13.1"
+  checksum: 10c0/33977da7a5f1a287936a0c85639fec6ca74f4f15ef1e59a6bc20338fc73dc69555381e211f7a3529b8150a1f71e4225525b41b60b52965bda53ce7d47377ada1
   languageName: node
   linkType: hard
 
