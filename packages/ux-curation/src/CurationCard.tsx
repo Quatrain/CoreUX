@@ -11,7 +11,7 @@ import {
   TypographyStylesProvider
 } from '@mantine/core'
 import { IconFileTypePdf, IconFileText, IconSparkles } from '@tabler/icons-react'
-import { OKFMetadataForm, type OKFDocumentMetadata } from './OKFMetadataForm'
+import { OKFMetadataForm, type OKFDocumentMetadata, type AxisDefinition } from './OKFMetadataForm'
 import type { TaxonomyNode } from '@quatrain/ux-taxonomy'
 
 export interface CurationCardProps {
@@ -19,6 +19,8 @@ export interface CurationCardProps {
   metadata: OKFDocumentMetadata
   /** Available taxonomy/thematic categories */
   thematics?: TaxonomyNode[]
+  /** Configured dynamic axes */
+  axes?: AxisDefinition[]
   /** Extracted raw text or markdown body */
   extractedText?: string
   /** Callback fired when curation metadata is saved */
@@ -37,6 +39,7 @@ export interface CurationCardProps {
 export const CurationCard: React.FC<CurationCardProps> = ({
   metadata,
   thematics = [],
+  axes = [],
   extractedText,
   onSave,
   loading = false,
@@ -44,38 +47,39 @@ export const CurationCard: React.FC<CurationCardProps> = ({
   style
 }) => {
   return (
-    <Card withBorder shadow="sm" radius="md" p="lg" className={`q-curation-card ${className}`} style={style}>
-      <Card.Section withBorder inheritPadding py="xs" mb="md" bg="var(--mantine-color-gray-light)">
-        <Group justify="space-between">
-          <Group gap="xs">
-            <IconFileTypePdf size={20} color="var(--mantine-color-red-filled)" />
-            <Text fw={600} size="sm">
-              {metadata.title || 'Nouveau Document'}
-            </Text>
-          </Group>
-          <Group gap="xs">
-            {metadata.properNouns && metadata.properNouns.length > 0 && (
-              <Badge size="xs" color="grape" variant="light" leftSection={<IconSparkles size={10} />}>
-                {metadata.properNouns.length} concepts détectés
-              </Badge>
-            )}
-            <Badge size="xs" color="blue" variant="filled">
-              {metadata.type || 'document'}
-            </Badge>
-          </Group>
+    <Card shadow="sm" padding="lg" radius="md" withBorder className={`q-curation-card ${className}`} style={style}>
+      <Group justify="space-between" mb="md">
+        <Group gap="xs">
+          <IconFileText size={20} color="var(--mantine-color-blue-filled)" />
+          <Text fw={700} size="md">
+            {metadata.title || 'Document sans titre'}
+          </Text>
         </Group>
-      </Card.Section>
+        <Group gap="xs">
+          <Badge color="blue" variant="light">
+            {metadata.category}
+          </Badge>
+          <Badge color="gray" variant="outline">
+            {metadata.type}
+          </Badge>
+        </Group>
+      </Group>
 
-      <Grid gutter="lg">
+      <Grid gutter="md">
         <Grid.Col span={{ base: 12, md: 5 }}>
-          <Paper withBorder p="md" radius="sm" h="100%">
-            <Text size="xs" fw={700} c="dimmed" tt="uppercase" mb="xs">
-              Extrait du contenu / Texte extrait
-            </Text>
-            <ScrollArea h={420} offsetScrollbars>
+          <Paper withBorder p="md" radius="sm" bg="var(--mantine-color-gray-0)" mih={350}>
+            <Group justify="space-between" mb="xs">
+              <Text fw={600} size="sm" c="dimmed">
+                Extrait / Aperçu du Contenu
+              </Text>
+              <Badge size="xs" color="teal" leftSection={<IconSparkles size={12} />}>
+                Extraction OCR/IA
+              </Badge>
+            </Group>
+            <ScrollArea h={320}>
               <TypographyStylesProvider>
                 <div style={{ fontSize: '0.85rem', lineHeight: 1.5, whiteSpace: 'pre-wrap' }}>
-                  {extractedText || metadata.body || 'Aucun texte extrait.'}
+                  {extractedText || metadata.body || metadata.description || 'Aucun texte extrait disponible.'}
                 </div>
               </TypographyStylesProvider>
             </ScrollArea>
@@ -86,6 +90,7 @@ export const CurationCard: React.FC<CurationCardProps> = ({
           <OKFMetadataForm
             initialValues={metadata}
             thematics={thematics}
+            axes={axes}
             onSave={onSave}
             loading={loading}
           />

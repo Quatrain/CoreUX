@@ -18,6 +18,24 @@ import {
 import { IconDeviceFloppy, IconCheck, IconEye, IconEdit, IconTags } from '@tabler/icons-react'
 import { ThematicBadgeGroup, type TaxonomyNode } from '@quatrain/ux-taxonomy'
 
+export interface AxisItem {
+  id: string
+  label?: string
+  title?: string
+  slug?: string
+  path?: string
+  description?: string
+}
+
+export interface AxisDefinition {
+  id: string
+  label: string
+  folder?: string
+  color?: string
+  description?: string
+  items?: AxisItem[]
+}
+
 /**
  * Data structure representing curated OKF document metadata.
  */
@@ -35,6 +53,7 @@ export interface OKFDocumentMetadata {
   altitudes?: string[]
   itineraries?: string[]
   crops?: string[]
+  axes?: Record<string, string[]>
   soa?: string
   revision?: string
   properNouns?: string[]
@@ -51,6 +70,8 @@ export interface OKFMetadataFormProps {
   initialValues: Partial<OKFDocumentMetadata>
   /** Available taxonomy/thematic nodes */
   thematics?: TaxonomyNode[]
+  /** Configured dynamic axes (soils, climates, crops, itineraries, etc.) */
+  axes?: AxisDefinition[]
   /** Callback fired when the form is submitted */
   onSave: (metadata: OKFDocumentMetadata) => void
   /** Whether the save operation is currently in progress */
@@ -67,6 +88,7 @@ export interface OKFMetadataFormProps {
 export const OKFMetadataForm: React.FC<OKFMetadataFormProps> = ({
   initialValues,
   thematics = [],
+  axes = [],
   onSave,
   loading = false,
   className = '',
@@ -78,16 +100,30 @@ export const OKFMetadataForm: React.FC<OKFMetadataFormProps> = ({
   const [description, setDescription] = useState(initialValues.description || '')
   const [tags, setTags] = useState<string[]>(initialValues.tags || [])
   const [selectedThematics, setSelectedThematics] = useState<string[]>(initialValues.thematics || [])
-  const [soils, setSoils] = useState<string[]>(initialValues.soils || [])
-  const [climates, setClimates] = useState<string[]>(initialValues.climates || [])
+  
+  // Per-axis values state (dynamic dictionary of axisId -> string[])
+  const [axisValues, setAxisValues] = useState<Record<string, string[]>>(() => {
+    const initial: Record<string, string[]> = { ...(initialValues.axes || {}) }
+    if (initialValues.soils) initial.soils = initialValues.soils
+    if (initialValues.climates) initial.climates = initialValues.climates
+    if (initialValues.crops) initial.crops = initialValues.crops
+    if (initialValues.itineraries) initial.itineraries = initialValues.itineraries
+    return initial
+  })
+
   const [latitudes, setLatitudes] = useState<string[]>(initialValues.latitudes || [])
   const [altitudes, setAltitudes] = useState<string[]>(initialValues.altitudes || [])
-  const [itineraries, setItineraries] = useState<string[]>(initialValues.itineraries || [])
-  const [crops, setCrops] = useState<string[]>(initialValues.crops || [])
   const [soa, setSoa] = useState(initialValues.soa || 'bradtech/world-agronomy')
   const [revision, setRevision] = useState(initialValues.revision || 'rev-1.0.0')
   const [source, setSource] = useState(initialValues.source || '')
   const [documentDate, setDocumentDate] = useState(initialValues.documentDate || '')
+
+  const handleAxisChange = (axisId: string, values: string[]) => {
+    setAxisValues((prev) => ({
+      ...prev,
+      [axisId]: values
+    }))
+  }
 
   const categoryOptions = thematics.map((t) => ({
     value: t.id,
@@ -96,6 +132,12 @@ export const OKFMetadataForm: React.FC<OKFMetadataFormProps> = ({
   if (!categoryOptions.some((o) => o.value === 'inbox')) {
     categoryOptions.unshift({ value: 'inbox', label: 'Inbox (Général)' })
   }
+
+  // Generate YAML frontmatter including only selected/non-empty axes
+  const renderedAxisBlocks = Object.entries(axisValues)
+    .filter(([_, vals]) => vals && vals.length > 0)
+    .map(([axisKey, vals]) => `${axisKey}:\n${vals.map((v) => `  - ${v}`).join('\n')}`)
+    .join('\n')
 
   const generatedYaml = `---
 soa: "${soa}"
@@ -107,12 +149,9 @@ category: ${category}
 tags:
 ${tags.map((t) => `  - ${t}`).join('\n')}
 ${selectedThematics.length > 0 ? `thematics:\n${selectedThematics.map((th) => `  - ${th}`).join('\n')}` : ''}
-${soils.length > 0 ? `soils:\n${soils.map((s) => `  - ${s}`).join('\n')}` : ''}
-${climates.length > 0 ? `climates:\n${climates.map((c) => `  - ${c}`).join('\n')}` : ''}
+${renderedAxisBlocks}
 ${latitudes.length > 0 ? `latitudes:\n${latitudes.map((l) => `  - ${l}`).join('\n')}` : ''}
 ${altitudes.length > 0 ? `altitudes:\n${altitudes.map((a) => `  - ${a}`).join('\n')}` : ''}
-${itineraries.length > 0 ? `itineraries:\n${itineraries.map((it) => `  - ${it}`).join('\n')}` : ''}
-${crops.length > 0 ? `crops:\n${crops.map((cr) => `  - ${cr}`).join('\n')}` : ''}
 ${documentDate ? `documentDate: "${documentDate}"` : ''}
 ${source ? `source: "${source.replace(/"/g, '\\"')}"` : ''}
 timestamp: "${initialValues.timestamp || new Date().toISOString()}"
@@ -128,12 +167,13 @@ timestamp: "${initialValues.timestamp || new Date().toISOString()}"
       description,
       tags,
       thematics: selectedThematics,
-      soils,
-      climates,
+      axes: axisValues,
+      soils: axisValues.soils || [],
+      climates: axisValues.climates || [],
+      crops: axisValues.crops || [],
+      itineraries: axisValues.itineraries || [],
       latitudes,
       altitudes,
-      itineraries,
-      crops,
       soa,
       revision,
       properNouns: initialValues.properNouns || [],
@@ -243,56 +283,64 @@ timestamp: "${initialValues.timestamp || new Date().toISOString()}"
                 />
               </Group>
 
-              <Divider my="xs" label="Axes de Classification Multi-Axiale Bradtech" labelPosition="center" />
+              <Divider my="xs" label="Axes de Classification Déclarés (Évolutifs & Optionnels)" labelPosition="center" />
 
-              <Group grow align="flex-start">
-                <TagsInput
-                  label="1. Types de Sols (soils)"
-                  description="argilo-calcaire, limoneux, sableux, glomaline..."
-                  placeholder="Ajouter un type de sol..."
-                  value={soils}
-                  onChange={setSoils}
-                />
+              {axes && axes.length > 0 ? (
+                <Stack gap="sm">
+                  {axes.map((axis) => {
+                    const autocompleteOptions = axis.items?.map((it) => it.slug || it.id) || []
+                    return (
+                      <TagsInput
+                        key={axis.id}
+                        label={`${axis.label} (${axis.id})`}
+                        description={axis.description || `Sélectionnez des fiches de l'axe ${axis.label} (${axis.items?.length || 0} fiches disponibles)`}
+                        placeholder={`Sélectionner ou saisir (${axis.id})...`}
+                        data={autocompleteOptions}
+                        value={axisValues[axis.id] || []}
+                        onChange={(vals) => handleAxisChange(axis.id, vals)}
+                      />
+                    )
+                  })}
+                </Stack>
+              ) : (
+                <Stack gap="xs">
+                  <Group grow align="flex-start">
+                    <TagsInput
+                      label="1. Types de Sols (soils)"
+                      description="argilo-calcaire, limoneux, sableux, glomaline..."
+                      placeholder="Ajouter un type de sol..."
+                      value={axisValues.soils || []}
+                      onChange={(v) => handleAxisChange('soils', v)}
+                    />
 
-                <TagsInput
-                  label="2. Zones Climatiques (climates)"
-                  description="mediterraneen, oceanique, continental, semi-aride..."
-                  placeholder="Ajouter un climat..."
-                  value={climates}
-                  onChange={setClimates}
-                />
-              </Group>
+                    <TagsInput
+                      label="2. Zones Climatiques (climates)"
+                      description="mediterraneen, oceanique, continental, semi-aride..."
+                      placeholder="Ajouter un climat..."
+                      value={axisValues.climates || []}
+                      onChange={(v) => handleAxisChange('climates', v)}
+                    />
+                  </Group>
 
-              <Group grow align="flex-start">
-                <TagsInput
-                  label="3. Zonage Géographique & Altitude (latitudes / altitudes)"
-                  description="40-45N, plaine-0-200m, colline-200-500m..."
-                  placeholder="Ajouter latitude/altitude..."
-                  value={[...latitudes, ...altitudes]}
-                  onChange={(vals) => {
-                    const lats = vals.filter(v => v.includes('N') || v.includes('S') || v.includes('lat'))
-                    const alts = vals.filter(v => !lats.includes(v))
-                    setLatitudes(lats.length > 0 ? lats : vals.slice(0, 1))
-                    setAltitudes(alts)
-                  }}
-                />
+                  <Group grow align="flex-start">
+                    <TagsInput
+                      label="3. Productions Végétales & Filières (crops)"
+                      description="viticulture, arboriculture, maraichage, grandes-cultures..."
+                      placeholder="Ajouter une production..."
+                      value={axisValues.crops || []}
+                      onChange={(v) => handleAxisChange('crops', v)}
+                    />
 
-                <TagsInput
-                  label="4. Itinéraires Techniques (itineraries)"
-                  description="viticulture-bio, enherbement-permanent, rouleau-faca..."
-                  placeholder="Ajouter un itinéraire technique..."
-                  value={itineraries}
-                  onChange={setItineraries}
-                />
-              </Group>
-
-              <TagsInput
-                label="5. Productions Végétales & Filières (crops)"
-                description="viticulture, arboriculture, maraichage, grandes-cultures, ppam, fourrages..."
-                placeholder="Ajouter une production végétale (ex: viticulture, olivier, blé...)"
-                value={crops}
-                onChange={setCrops}
-              />
+                    <TagsInput
+                      label="4. Itinéraires Techniques (itineraries)"
+                      description="viticulture-bio, enherbement-permanent, rouleau-faca..."
+                      placeholder="Ajouter un itinéraire technique..."
+                      value={axisValues.itineraries || []}
+                      onChange={(v) => handleAxisChange('itineraries', v)}
+                    />
+                  </Group>
+                </Stack>
+              )}
 
               <Divider my="xs" />
 
