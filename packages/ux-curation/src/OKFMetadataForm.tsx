@@ -34,6 +34,7 @@ export interface OKFDocumentMetadata {
   latitudes?: string[]
   altitudes?: string[]
   itineraries?: string[]
+  crops?: string[]
   soa?: string
   revision?: string
   properNouns?: string[]
@@ -82,6 +83,7 @@ export const OKFMetadataForm: React.FC<OKFMetadataFormProps> = ({
   const [latitudes, setLatitudes] = useState<string[]>(initialValues.latitudes || [])
   const [altitudes, setAltitudes] = useState<string[]>(initialValues.altitudes || [])
   const [itineraries, setItineraries] = useState<string[]>(initialValues.itineraries || [])
+  const [crops, setCrops] = useState<string[]>(initialValues.crops || [])
   const [soa, setSoa] = useState(initialValues.soa || 'bradtech/world-agronomy')
   const [revision, setRevision] = useState(initialValues.revision || 'rev-1.0.0')
   const [source, setSource] = useState(initialValues.source || '')
@@ -110,6 +112,7 @@ ${climates.length > 0 ? `climates:\n${climates.map((c) => `  - ${c}`).join('\n')
 ${latitudes.length > 0 ? `latitudes:\n${latitudes.map((l) => `  - ${l}`).join('\n')}` : ''}
 ${altitudes.length > 0 ? `altitudes:\n${altitudes.map((a) => `  - ${a}`).join('\n')}` : ''}
 ${itineraries.length > 0 ? `itineraries:\n${itineraries.map((it) => `  - ${it}`).join('\n')}` : ''}
+${crops.length > 0 ? `crops:\n${crops.map((cr) => `  - ${cr}`).join('\n')}` : ''}
 ${documentDate ? `documentDate: "${documentDate}"` : ''}
 ${source ? `source: "${source.replace(/"/g, '\\"')}"` : ''}
 timestamp: "${initialValues.timestamp || new Date().toISOString()}"
@@ -130,6 +133,7 @@ timestamp: "${initialValues.timestamp || new Date().toISOString()}"
       latitudes,
       altitudes,
       itineraries,
+      crops,
       soa,
       revision,
       properNouns: initialValues.properNouns || [],
@@ -281,6 +285,14 @@ timestamp: "${initialValues.timestamp || new Date().toISOString()}"
                   onChange={setItineraries}
                 />
               </Group>
+
+              <TagsInput
+                label="5. Productions Végétales & Filières (crops)"
+                description="viticulture, arboriculture, maraichage, grandes-cultures, ppam, fourrages..."
+                placeholder="Ajouter une production végétale (ex: viticulture, olivier, blé...)"
+                value={crops}
+                onChange={setCrops}
+              />
 
               <Divider my="xs" />
 

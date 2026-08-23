@@ -23,6 +23,7 @@ export interface UserContextProfile {
   latitude?: number
   altitude?: number
   itineraries: string[]
+  crops?: string[]
   destinationPath?: string
 }
 
@@ -33,6 +34,7 @@ export interface ContextExtractionModalProps {
   availableSoils?: string[]
   availableClimates?: string[]
   availableItineraries?: string[]
+  availableCrops?: string[]
   loading?: boolean
 }
 
@@ -47,6 +49,7 @@ export const ContextExtractionModal: React.FC<ContextExtractionModalProps> = ({
   availableSoils = ['argilo-calcaire', 'limoneux', 'sableux', 'schisteux', 'glomaline'],
   availableClimates = ['mediterraneen', 'oceanique', 'continental', 'semi-aride'],
   availableItineraries = ['viticulture-biologique', 'enherbement-permanent', 'rouleau-faca', 'agroforesterie-intra-parcellaire'],
+  availableCrops = ['viticulture', 'arboriculture', 'maraichage', 'grandes-cultures', 'ppam', 'fourrages'],
   loading = false
 }) => {
   const [userId, setUserId] = useState('user-vignoble-occitanie')
@@ -56,6 +59,7 @@ export const ContextExtractionModal: React.FC<ContextExtractionModalProps> = ({
   const [latitude, setLatitude] = useState<number | string>(43.6)
   const [altitude, setAltitude] = useState<number | string>(140)
   const [itineraries, setItineraries] = useState<string[]>(['viticulture-biologique', 'enherbement-permanent'])
+  const [crops, setCrops] = useState<string[]>(['viticulture'])
   const [destinationPath, setDestinationPath] = useState('/Users/crapougnax/CODE/CRAPOUGNAX/second-brain-data')
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -68,6 +72,7 @@ export const ContextExtractionModal: React.FC<ContextExtractionModalProps> = ({
       latitude: typeof latitude === 'number' ? latitude : parseFloat(latitude) || undefined,
       altitude: typeof altitude === 'number' ? altitude : parseFloat(altitude) || undefined,
       itineraries,
+      crops,
       destinationPath
     })
   }
@@ -152,6 +157,14 @@ export const ContextExtractionModal: React.FC<ContextExtractionModalProps> = ({
             data={availableItineraries}
             value={itineraries}
             onChange={setItineraries}
+          />
+
+          <TagsInput
+            label="Productions Végétales Cibles (Filières)"
+            description="Ex: viticulture, arboriculture, maraichage, grandes-cultures, ppam..."
+            data={availableCrops}
+            value={crops}
+            onChange={setCrops}
           />
 
           <TextInput
