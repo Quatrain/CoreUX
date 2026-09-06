@@ -1,5 +1,7 @@
 export type CardThemeMode = 'pwa' | 'tv' | 'web'
 
+export type CardPaletteMode = 'pastel' | 'vivid' | string
+
 export type CardViewMode = 'simplissime' | 'expert'
 
 export type CardDataSourceType = 'plot' | 'probe' | 'sensor' | string
@@ -81,6 +83,7 @@ export interface SquareCardConfig {
   timestamp?: number | string
   relativeTime?: string
   themeMode?: CardThemeMode
+  palette?: CardPaletteMode
   isStacked?: boolean
   isInteractive?: boolean
   isPinned?: boolean
@@ -97,5 +100,6 @@ export interface DashboardCanvasConfig {
   cardOrder: string[]
   hiddenCards?: string[]
   themeMode?: CardThemeMode
+  palette?: CardPaletteMode
   defaultViewMode?: CardViewMode
 }

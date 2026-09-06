@@ -1,9 +1,10 @@
 import React from 'react'
-import { SquareCardConfig, CardSubMetric, CardViewMode, CardSparklineConfig, CardGaugeConfig } from '@quatrain/ux-card'
+import { SquareCardConfig, CardSubMetric, CardViewMode, CardSparklineConfig, CardGaugeConfig, CardPaletteMode } from '@quatrain/ux-card'
 
 export interface SquareCardProps {
   config: SquareCardConfig
   viewMode?: CardViewMode
+  palette?: CardPaletteMode
   onToggleMode?: (cardId: string, currentMode: CardViewMode) => void
   onTogglePin?: (config: SquareCardConfig) => void
   onZoom?: (config: SquareCardConfig) => void
@@ -214,6 +215,7 @@ function renderSparkline(
 export const SquareCard: React.FC<SquareCardProps> = ({
   config,
   viewMode,
+  palette: propPalette,
   onToggleMode,
   onTogglePin,
   onZoom,
@@ -259,17 +261,20 @@ export const SquareCard: React.FC<SquareCardProps> = ({
   }
 
   const isInteractive = Boolean(config.isInteractive || config.onClickUrl || onCardClick)
+  const palette = propPalette ?? config.palette ?? 'pastel'
+  const paletteClass = `q-palette-${palette}`
 
   return (
     <article
       id={`card-${config.id}`}
-      className={`q-square-card ${themeClass} ${domainClass} ${modeClass} ${statusClass} ${isInteractive ? 'q-interactive' : ''} ${className}`}
+      className={`q-square-card ${themeClass} ${domainClass} ${paletteClass} ${modeClass} ${statusClass} ${isInteractive ? 'q-interactive' : ''} ${className}`}
       style={style}
       onClick={isInteractive ? handleCardClick : undefined}
       tabIndex={isInteractive ? 0 : undefined}
       data-zoomable={config.isZoomable ? 'true' : undefined}
       data-zoom-type={config.zoomType ?? 'detail'}
       data-view-mode={activeMode}
+      data-card-palette={palette}
     >
       {/* Zone 1 & 2: Header */}
       <header className="q-card-header">

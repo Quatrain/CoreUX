@@ -1,6 +1,6 @@
 {
   "name": "@quatrain/ux-card-react",
-  "version": "1.0.0-rc.7",
+  "version": "1.0.0-rc.8",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "style": "dist/styles/cards.css",
@@ -19,7 +19,7 @@
     "react-dom": "^18.3.1"
   },
   "dependencies": {
-    "@quatrain/ux-card": "^1.0.0-rc.5",
+    "@quatrain/ux-card": "^1.0.0-rc.6",
     "@quatrain/ux-grid": "^1.0.0-rc.1",
     "@quatrain/ux-grid-react": "^1.0.0-rc.2"
   },
@@ -32,7 +32,7 @@
     "typescript": "^5.2.2"
   },
   "scripts": {
-    "build": "tsc && mkdir -p dist/styles && cp src/styles/cards.css dist/styles/cards.css",
+    "build": "tsc && mkdir -p dist/styles && cp src/styles/*.css dist/styles/",
     "wbuild": "tsc --watch"
   },
   "repository": {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { SquareCardConfig, CardThemeMode, CardViewMode } from '@quatrain/ux-card'
+import { SquareCardConfig, CardThemeMode, CardViewMode, CardPaletteMode } from '@quatrain/ux-card'
 import { ResponsiveGrid, GridCategoryItem, GridModal } from '@quatrain/ux-grid-react'
 import { SquareCard } from './SquareCard'
 import '@quatrain/ux-grid-react/dist/styles/grid.css'
@@ -7,6 +7,7 @@ import '@quatrain/ux-grid-react/dist/styles/grid.css'
 export interface DashboardGridProps {
   cards: SquareCardConfig[]
   themeMode?: CardThemeMode
+  palette?: CardPaletteMode
   isEditable?: boolean
   defaultViewMode?: CardViewMode
   showToolbar?: boolean
@@ -23,6 +24,7 @@ export interface DashboardGridProps {
 export const DashboardGrid: React.FC<DashboardGridProps> = ({
   cards,
   themeMode = 'web',
+  palette = 'pastel',
   isEditable = true,
   defaultViewMode = 'simplissime',
   showToolbar = true,
@@ -64,7 +66,7 @@ export const DashboardGrid: React.FC<DashboardGridProps> = ({
           setGlobalMode(m as CardViewMode)
           setCardOverrides({})
         }}
-        className={className}
+        className={`q-palette-${palette} ${className}`}
         style={style}
         renderItem={(card) => {
           const effectiveMode = cardOverrides[card.id] || card.viewMode || globalMode
@@ -74,6 +76,7 @@ export const DashboardGrid: React.FC<DashboardGridProps> = ({
             <SquareCard
               config={{ ...card, isPinned, themeMode }}
               viewMode={effectiveMode}
+              palette={card.palette || palette}
               onToggleMode={toggleCardMode}
               onTogglePin={onTogglePin}
               onZoom={handleZoom}
