@@ -35,39 +35,75 @@ function renderSparkline(
   cardId = 'spark'
 ) {
   if (!sparklineData) return null
-  const points = Array.isArray(sparklineData) ? sparklineData : sparklineData.points
-  if (!points || points.length < 2) return null
+  const isConfig = !Array.isArray(sparklineData)
+  const historyPoints = isConfig ? sparklineData.points : sparklineData
+  const forecastPoints = isConfig ? (sparklineData.forecastPoints ?? []) : []
 
-  const color = (!Array.isArray(sparklineData) && sparklineData.color) || defaultColor
-  const minVal = (!Array.isArray(sparklineData) && sparklineData.min !== undefined) ? sparklineData.min : Math.min(...points)
-  const maxVal = (!Array.isArray(sparklineData) && sparklineData.max !== undefined) ? sparklineData.max : Math.max(...points)
+  if (!historyPoints || historyPoints.length === 0) return null
+  const allPoints = [...historyPoints, ...forecastPoints]
+  if (allPoints.length < 2) return null
+
+  const color = (isConfig && sparklineData.color) || defaultColor
+  const forecastColor = (isConfig && sparklineData.forecastColor) || color
+
+  const minVal = (isConfig && sparklineData.min !== undefined) ? sparklineData.min : Math.min(...allPoints)
+  const maxVal = (isConfig && sparklineData.max !== undefined) ? sparklineData.max : Math.max(...allPoints)
   const range = maxVal - minVal === 0 ? 1 : maxVal - minVal
 
-  const width = 84
-  const height = 32
-  const padding = 3
+  const width = 76
+  const height = 28
+  const padding = 2
 
-  const coords = points.map((val, idx) => {
-    const x = padding + (idx / (points.length - 1)) * (width - 2 * padding)
+  const totalCount = allPoints.length
+  const coords = allPoints.map((val, idx) => {
+    const x = padding + (idx / (totalCount - 1)) * (width - 2 * padding)
     const y = height - padding - ((val - minVal) / range) * (height - 2 * padding)
-    return `${x.toFixed(1)},${y.toFixed(1)}`
+    return { x: Number(x.toFixed(1)), y: Number(y.toFixed(1)) }
   })
 
-  const pathD = `M ${coords.join(' L ')}`
-  const areaD = `${pathD} L ${(width - padding).toFixed(1)},${height} L ${padding},${height} Z`
+  // History path (solid)
+  const historyCoords = coords.slice(0, historyPoints.length)
+  const historyPathD = `M ${historyCoords.map((c) => `${c.x},${c.y}`).join(' L ')}`
+
+  // Forecast path (dashed): connects last history point to the end
+  let forecastPathD = ''
+  if (forecastPoints.length > 0) {
+    const forecastCoords = coords.slice(historyPoints.length - 1)
+    forecastPathD = `M ${forecastCoords.map((c) => `${c.x},${c.y}`).join(' L ')}`
+  }
+
   const gradId = `spark-grad-${cardId.replace(/[^a-zA-Z0-9_-]/g, '')}`
+  const allCoords = coords.map((c) => `${c.x},${c.y}`).join(' L ')
+  const areaD = `M ${allCoords} L ${(width - padding).toFixed(1)},${height} L ${padding},${height} Z`
 
   return (
-    <div className="q-card-sparkline-wrapper" title="Évolution récente">
+    <div
+      className="q-card-sparkline-wrapper"
+      title={forecastPoints.length > 0 ? "Historique (plein) & Prévisions (pointillé)" : "Évolution récente"}
+    >
       <svg viewBox={`0 0 ${width} ${height}`} className="q-card-sparkline-svg" aria-hidden="true">
         <defs>
           <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor={color} stopOpacity="0.35" />
+            <stop offset="0%" stopColor={color} stopOpacity="0.30" />
             <stop offset="100%" stopColor={color} stopOpacity="0.0" />
           </linearGradient>
         </defs>
         <path d={areaD} fill={`url(#${gradId})`} />
-        <path d={pathD} fill="none" stroke={color} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+        {/* Solid historical line */}
+        <path d={historyPathD} fill="none" stroke={color} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+        {/* Dashed forecast line */}
+        {forecastPathD && (
+          <path
+            d={forecastPathD}
+            fill="none"
+            stroke={forecastColor}
+            strokeWidth="2.2"
+            strokeDasharray="3 3"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            opacity="0.9"
+          />
+        )}
       </svg>
     </div>
   )

@@ -34,7 +34,9 @@ export type CardDomainCategory = 'air' | 'sol' | 'lumiere' | 'sante' | 'risque' 
 
 export interface CardSparklineConfig {
   points: number[]
+  forecastPoints?: number[]
   color?: string
+  forecastColor?: string
   min?: number
   max?: number
 }

@@ -1,6 +1,6 @@
 {
   "name": "@quatrain/ux-card",
-  "version": "1.0.0-rc.2",
+  "version": "1.0.0-rc.3",
   "description": "Square modular cards and stacked widgets for PWA, TV Kiosk and Web dashboards",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

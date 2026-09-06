@@ -108,34 +108,44 @@
    -------------------------------------------------------------------------- */
 .q-dashboard-canvas {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.75rem;
   width: 100%;
   box-sizing: border-box;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 480px) {
   .q-dashboard-canvas {
     grid-template-columns: 1fr;
-    gap: 0.85rem;
+    gap: 0.65rem;
   }
 }
 
-@media (min-width: 641px) and (max-width: 1024px) {
+@media (min-width: 481px) and (max-width: 720px) {
   .q-dashboard-canvas {
     grid-template-columns: repeat(2, 1fr);
+    gap: 0.7rem;
   }
 }
 
-@media (min-width: 1025px) and (max-width: 1440px) {
+@media (min-width: 721px) and (max-width: 960px) {
   .q-dashboard-canvas {
     grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
   }
 }
 
-@media (min-width: 1441px) {
+@media (min-width: 961px) and (max-width: 1180px) {
   .q-dashboard-canvas {
     grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+  }
+}
+
+@media (min-width: 1181px) {
+  .q-dashboard-canvas {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.75rem;
   }
 }
 
@@ -154,7 +164,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 1.15rem;
+  padding: 0.85rem;
   box-sizing: border-box;
   background: var(--q-card-bg);
   border: 1px solid var(--q-card-border);
@@ -177,64 +187,91 @@
 
 /* Mood & Status Background Accents */
 .q-square-card.status-optimal {
-  background: linear-gradient(145deg, #ffffff 65%, #f0fdf4 100%);
-  border-color: #bbf7d0;
+  border-color: #86efac;
 }
 
 .q-square-card.status-warning {
-  background: linear-gradient(145deg, #ffffff 65%, #fffbeb 100%);
-  border-color: #fde68a;
+  border-color: #f59e0b !important;
+  border-width: 1.5px;
+  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.28);
+}
+.q-square-card.status-warning .q-card-badge {
+  background: #f59e0b;
+  color: #ffffff;
+  font-weight: 800;
 }
 
 .q-square-card.status-alert {
-  background: linear-gradient(145deg, #ffffff 65%, #fef2f2 100%);
-  border-color: #fecaca;
+  background: linear-gradient(150deg, #fff1f2 0%, #fee2e2 100%) !important;
+  border-color: #ef4444 !important;
+  border-width: 2px;
+  box-shadow: 0 6px 22px rgba(239, 68, 68, 0.32);
+  animation: qPulseAlert 2.5s infinite ease-in-out;
+}
+.q-square-card.status-alert .q-card-badge {
+  background: #dc2626;
+  color: #ffffff;
+  font-weight: 800;
 }
 
-/* Domain Color Themes (Air, Sol, Lumière, Santé Sonde, Risques) */
+@keyframes qPulseAlert {
+  0%, 100% {
+    box-shadow: 0 4px 16px rgba(239, 68, 68, 0.25);
+  }
+  50% {
+    box-shadow: 0 6px 24px rgba(239, 68, 68, 0.45);
+  }
+}
+
+/* Domain Color Themes (Nature : Air, Sol, Lumière, Santé Sonde, Risques) */
 .q-square-card.q-domain-air {
-  background: linear-gradient(145deg, #ffffff 60%, #f0f9ff 100%);
-  border-color: #bae6fd;
+  background: linear-gradient(150deg, #f0f9ff 0%, #e0f2fe 100%);
+  border-color: #7dd3fc;
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.12);
 }
 .q-square-card.q-domain-air .q-card-icon-badge {
-  background: #e0f2fe;
+  background: #bae6fd;
   color: #0284c7;
 }
 
 .q-square-card.q-domain-sol {
-  background: linear-gradient(145deg, #ffffff 60%, #fefce8 100%);
-  border-color: #fed7aa;
+  background: linear-gradient(150deg, #fffbeb 0%, #fef3c7 100%);
+  border-color: #fcd34d;
+  box-shadow: 0 4px 14px rgba(180, 83, 9, 0.12);
 }
 .q-square-card.q-domain-sol .q-card-icon-badge {
-  background: #fef3c7;
+  background: #fde68a;
   color: #b45309;
 }
 
 .q-square-card.q-domain-lumiere {
-  background: linear-gradient(145deg, #ffffff 60%, #fffbeb 100%);
-  border-color: #fde68a;
+  background: linear-gradient(150deg, #fefce8 0%, #fef08a 100%);
+  border-color: #facc15;
+  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.12);
 }
 .q-square-card.q-domain-lumiere .q-card-icon-badge {
-  background: #fef9c3;
-  color: #d97706;
+  background: #fef08a;
+  color: #a16207;
 }
 
 .q-square-card.q-domain-sante {
-  background: linear-gradient(145deg, #ffffff 60%, #f5f3ff 100%);
-  border-color: #ddd6fe;
+  background: linear-gradient(150deg, #f5f3ff 0%, #ede9fe 100%);
+  border-color: #c7d2fe;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.12);
 }
 .q-square-card.q-domain-sante .q-card-icon-badge {
-  background: #ede9fe;
-  color: #6366f1;
+  background: #ddd6fe;
+  color: #4f46e5;
 }
 
 .q-square-card.q-domain-risque {
-  background: linear-gradient(145deg, #ffffff 60%, #fff1f2 100%);
+  background: linear-gradient(150deg, #fff1f2 0%, #ffe4e6 100%);
   border-color: #fecdd3;
+  box-shadow: 0 4px 14px rgba(225, 29, 72, 0.12);
 }
 .q-square-card.q-domain-risque .q-card-icon-badge {
-  background: #ffe4e6;
-  color: #e11d48;
+  background: #fecdd3;
+  color: #be123c;
 }
 
 /* --------------------------------------------------------------------------
@@ -260,7 +297,7 @@
 }
 
 .q-card-title {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-weight: 700;
   color: var(--q-card-text-primary);
   line-height: 1.25;
@@ -271,33 +308,33 @@
 }
 
 .q-card-source {
-  font-size: 0.725rem;
+  font-size: 0.7rem;
   font-weight: 500;
   color: var(--q-card-text-secondary);
   line-height: 1.2;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-top: 0.15rem;
+  margin-top: 0.1rem;
 }
 
 .q-card-header-actions {
   display: flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.25rem;
   flex-shrink: 0;
 }
 
 .q-card-action-btn {
   background: rgba(0, 0, 0, 0.04);
   border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 0.5rem;
-  width: 26px;
-  height: 26px;
+  border-radius: 0.45rem;
+  width: 24px;
+  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   cursor: pointer;
   transition: all 0.15s ease;
   padding: 0;
@@ -315,15 +352,15 @@
 }
 
 .q-card-icon-badge {
-  font-size: 1.15rem;
+  font-size: 1rem;
   line-height: 1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 0.5rem;
-  background: rgba(0, 0, 0, 0.04);
+  width: 25px;
+  height: 25px;
+  border-radius: 0.45rem;
+  background: rgba(0, 0, 0, 0.05);
   flex-shrink: 0;
 }
 
@@ -335,7 +372,7 @@
   flex-direction: column;
   justify-content: center;
   flex: 1;
-  padding: 0.35rem 0;
+  padding: 0.25rem 0;
   min-height: 0;
 }
 
@@ -343,21 +380,21 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 0.4rem;
+  gap: 0.35rem;
 }
 
 .q-card-expert-content {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 0.35rem;
+  gap: 0.25rem;
 }
 
 .q-card-action-tip {
-  font-size: 0.825rem;
+  font-size: 0.775rem;
   font-weight: 600;
   color: #334155;
-  line-height: 1.35;
+  line-height: 1.3;
   margin: 0;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -368,11 +405,11 @@
 .q-card-main-metric {
   display: flex;
   align-items: baseline;
-  gap: 0.25rem;
+  gap: 0.2rem;
 }
 
 .q-card-value {
-  font-size: 2.85rem;
+  font-size: 2.35rem;
   font-weight: 900;
   color: var(--q-card-text-primary);
   line-height: 1;
@@ -380,11 +417,11 @@
 }
 
 .q-metric-simplissime .q-card-value {
-  font-size: 3.25rem;
+  font-size: 2.65rem;
 }
 
 .q-card-unit {
-  font-size: 1.2rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: var(--q-card-text-secondary);
 }
