@@ -30,6 +30,15 @@ export interface CardSubMetric {
   status?: CardStatusLevel
 }
 
+export type CardDomainCategory = 'air' | 'sol' | 'lumiere' | 'sante' | 'risque' | string
+
+export interface CardSparklineConfig {
+  points: number[]
+  color?: string
+  min?: number
+  max?: number
+}
+
 export interface SquareCardConfig {
   id: string
   title: string
@@ -37,6 +46,7 @@ export interface SquareCardConfig {
   sourceType?: CardDataSourceType
   sourceName?: string
   category?: string
+  domainCategory?: CardDomainCategory
   icon?: string
   primaryValue: number | string
   unit?: string
@@ -45,6 +55,7 @@ export interface SquareCardConfig {
   actionTip?: string
   viewMode?: CardViewMode
   subMetrics?: CardSubMetric[]
+  sparkline?: number[] | CardSparklineConfig
   timestamp?: number | string
   relativeTime?: string
   themeMode?: CardThemeMode
