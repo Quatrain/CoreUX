@@ -1,6 +1,6 @@
 {
   "name": "@quatrain/ux-card-react",
-  "version": "1.0.0-rc.6",
+  "version": "1.0.0-rc.7",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "style": "dist/styles/cards.css",
