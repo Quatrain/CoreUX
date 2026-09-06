@@ -278,7 +278,31 @@ export const SquareCard: React.FC<SquareCardProps> = ({
             {config.icon && <span className="q-card-icon-badge" aria-hidden="true">{config.icon}</span>}
             <h3 className="q-card-title">{config.title}</h3>
           </div>
-          {config.sourceName && <span className="q-card-source">{config.sourceName}</span>}
+          {(config.scopeName || config.sourceName) && (
+            <div className="q-card-scope-row">
+              {config.scopeName ? (
+                <span className="q-card-scope-badge" title={config.scopeName}>
+                  <span className="q-card-scope-icon" aria-hidden="true">
+                    {config.scopeIcon ?? (config.scopeType === 'production' ? '🏭' : '🌱')}
+                  </span>
+                  <span className="q-card-scope-text">{config.scopeName}</span>
+                </span>
+              ) : config.sourceType === 'plot' || config.sourceType === 'production' ? (
+                <span className="q-card-scope-badge" title={config.sourceName}>
+                  <span className="q-card-scope-icon" aria-hidden="true">
+                    {config.scopeIcon ?? (config.sourceType === 'production' ? '🏭' : '🌱')}
+                  </span>
+                  <span className="q-card-scope-text">{config.sourceName}</span>
+                </span>
+              ) : null}
+
+              {config.sourceName && (config.scopeName || (config.sourceType !== 'plot' && config.sourceType !== 'production')) && (
+                <span className="q-card-source-tag" title={config.sourceName}>
+                  {config.sourceName}
+                </span>
+              )}
+            </div>
+          )}
         </div>
         <div className="q-card-header-actions">
           {onTogglePin && (

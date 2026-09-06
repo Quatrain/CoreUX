@@ -61,6 +61,9 @@ export interface SquareCardConfig {
   id: string
   title: string
   subtitle?: string
+  scopeName?: string
+  scopeType?: 'plot' | 'production' | 'batch' | 'site' | 'zone' | string
+  scopeIcon?: string
   sourceType?: CardDataSourceType
   sourceName?: string
   category?: string
