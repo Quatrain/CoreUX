@@ -1,17 +1,28 @@
 {
   "name": "@quatrain/ux-card-react",
-  "version": "1.0.0",
+  "version": "1.0.0-rc.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "style": "dist/styles/cards.css",
   "bun": "src/index.ts",
   "license": "AGPL-3.0-only",
+  "files": [
+    "LICENSE.md",
+    "dist/",
+    "!dist/**/*.test.*",
+    "src/",
+    "!src/**/*.test.*",
+    "README.md"
+  ],
+
   "peerDependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "dependencies": {
-    "@quatrain/ux-card": "workspace:*"
+    "@quatrain/ux-card": "^1.0.0-rc.1"
   },
+
   "devDependencies": {
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
@@ -20,9 +31,10 @@
     "typescript": "^5.2.2"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && mkdir -p dist/styles && cp src/styles/cards.css dist/styles/cards.css",
     "wbuild": "tsc --watch"
   },
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Quatrain/CoreUX.git",

@@ -1,6 +1,6 @@
 {
   "name": "@quatrain/ux-card",
-  "version": "1.0.0",
+  "version": "1.0.0-rc.1",
   "description": "Square modular cards and stacked widgets for PWA, TV Kiosk and Web dashboards",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -8,12 +8,16 @@
   "files": [
     "LICENSE.md",
     "dist/",
+    "!dist/**/*.test.*",
     "src/",
+    "!src/**/*.test.*",
     "README.md"
   ],
+
+
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Quatrain/Core.git",
+    "url": "git+https://github.com/Quatrain/CoreUX.git",
     "directory": "packages/ux-card"
   },
   "author": "Quatrain Développement SAS <developers@quatrain.com>",
@@ -23,11 +27,9 @@
     "@types/node": "^22.10.1",
     "typescript": "^5.2.2"
   },
-  "dependencies": {
-    "@quatrain/types": "workspace:*"
-  },
   "scripts": {
     "build": "tsc",
     "wbuild": "tsc --watch"
   }
 }
+

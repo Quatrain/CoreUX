@@ -1,6 +1,8 @@
 export type CardThemeMode = 'pwa' | 'tv' | 'web'
 
-export type CardDataSourceType = 'plot' | 'probe' | 'sensor'
+export type CardViewMode = 'simplissime' | 'expert'
+
+export type CardDataSourceType = 'plot' | 'probe' | 'sensor' | string
 
 export type CardStatusLevel = 'optimal' | 'warning' | 'alert' | 'info' | 'neutral'
 
@@ -34,19 +36,25 @@ export interface SquareCardConfig {
   subtitle?: string
   sourceType?: CardDataSourceType
   sourceName?: string
+  category?: string
   icon?: string
   primaryValue: number | string
   unit?: string
   extremes?: CardExtremes
   interpretation?: CardInterpretation
+  actionTip?: string
+  viewMode?: CardViewMode
   subMetrics?: CardSubMetric[]
   timestamp?: number | string
   relativeTime?: string
   themeMode?: CardThemeMode
   isStacked?: boolean
   isInteractive?: boolean
+  isPinned?: boolean
   isZoomable?: boolean
-  zoomType?: 'map' | 'chart' | 'detail'
+  zoomType?: 'map' | 'chart' | 'detail' | string
+  zoomTitle?: string
+  zoomPayload?: any
   onClickUrl?: string
 }
 
@@ -56,4 +64,5 @@ export interface DashboardCanvasConfig {
   cardOrder: string[]
   hiddenCards?: string[]
   themeMode?: CardThemeMode
+  defaultViewMode?: CardViewMode
 }
