@@ -1,5 +1,5 @@
 import React from 'react'
-import { SquareCardConfig, CardSubMetric, CardViewMode, CardSparklineConfig } from '@quatrain/ux-card'
+import { SquareCardConfig, CardSubMetric, CardViewMode, CardSparklineConfig, CardGaugeConfig } from '@quatrain/ux-card'
 
 export interface SquareCardProps {
   config: SquareCardConfig
@@ -27,6 +27,108 @@ function getDomainDefaultColor(domain?: string): string {
     default:
       return '#3b82f6'
   }
+}
+
+function renderGauge(
+  gauge: CardGaugeConfig,
+  primaryValue: number | string,
+  unit?: string,
+  domainColor = '#3b82f6'
+) {
+  const currentVal = typeof gauge.current === 'number' ? gauge.current : parseFloat(String(primaryValue))
+  const min = gauge.min
+  const max = gauge.max
+  const range = max - min === 0 ? 1 : max - min
+  const ratio = Math.max(0, Math.min(1, (currentVal - min) / range))
+
+  const radius = 38
+  const circumference = Math.PI * radius
+  const strokeDashoffset = circumference * (1 - ratio)
+
+  // Determine active zone or color
+  let activeColor = domainColor
+  if (gauge.zones && gauge.zones.length > 0) {
+    for (const zone of gauge.zones) {
+      if (currentVal >= zone.from && currentVal <= zone.to) {
+        activeColor = zone.color
+        break
+      }
+    }
+  }
+
+  const angleRad = Math.PI - ratio * Math.PI
+  const dotX = 50 + radius * Math.cos(angleRad)
+  const dotY = 48 - radius * Math.sin(angleRad)
+
+  return (
+    <div className="q-card-gauge-wrapper">
+      <svg viewBox="0 0 100 58" className="q-card-gauge-svg" aria-hidden="true">
+        {/* Background Track */}
+        <path
+          d="M 12 48 A 38 38 0 0 1 88 48"
+          fill="none"
+          stroke="rgba(0, 0, 0, 0.08)"
+          strokeWidth="7.5"
+          strokeLinecap="round"
+        />
+
+        {/* Optional Zone Segments */}
+        {gauge.zones &&
+          gauge.zones.map((zone, idx) => {
+            const zStartRatio = Math.max(0, Math.min(1, (zone.from - min) / range))
+            const zEndRatio = Math.max(0, Math.min(1, (zone.to - min) / range))
+            const zLength = (zEndRatio - zStartRatio) * circumference
+            const zOffset = circumference * (1 - zStartRatio)
+            return (
+              <path
+                key={idx}
+                d="M 12 48 A 38 38 0 0 1 88 48"
+                fill="none"
+                stroke={zone.color}
+                strokeWidth="7.5"
+                strokeDasharray={`${zLength.toFixed(1)} ${circumference.toFixed(1)}`}
+                strokeDashoffset={zOffset.toFixed(1)}
+                opacity="0.30"
+              />
+            )
+          })}
+
+        {/* Progress Arc */}
+        <path
+          d="M 12 48 A 38 38 0 0 1 88 48"
+          fill="none"
+          stroke={activeColor}
+          strokeWidth="7.5"
+          strokeDasharray={circumference.toFixed(1)}
+          strokeDashoffset={strokeDashoffset.toFixed(1)}
+          strokeLinecap="round"
+          style={{ transition: 'stroke-dashoffset 0.6s cubic-bezier(0.16, 1, 0.3, 1)' }}
+        />
+
+        {/* Needle Dot Cursor */}
+        <circle
+          cx={dotX.toFixed(1)}
+          cy={dotY.toFixed(1)}
+          r="4"
+          fill="#ffffff"
+          stroke={activeColor}
+          strokeWidth="2.5"
+        />
+      </svg>
+
+      {/* Center Value */}
+      <div className="q-card-gauge-center">
+        <span className="q-card-value">{primaryValue}</span>
+        {unit && <span className="q-card-unit">{unit}</span>}
+      </div>
+
+      {/* Extremes / Bounds */}
+      <div className="q-card-gauge-bounds">
+        <span className="q-card-gauge-bound q-card-gauge-min">{gauge.min}{gauge.unit ?? unit ?? ''}</span>
+        <span className="q-card-gauge-bound q-card-gauge-max">{gauge.max}{gauge.unit ?? unit ?? ''}</span>
+      </div>
+    </div>
+  )
 }
 
 function renderSparkline(
@@ -219,7 +321,16 @@ export const SquareCard: React.FC<SquareCardProps> = ({
 
       {/* Zone 3 & 4: Body */}
       <div className="q-card-body">
-        {activeMode === 'simplissime' ? (
+        {config.gauge ? (
+          <div className="q-card-gauge-container">
+            {renderGauge(config.gauge, config.primaryValue, config.unit, sparklineColor)}
+            {activeMode === 'simplissime' && config.actionTip && (
+              <p className="q-card-action-tip" style={{ textAlign: 'center', marginTop: '0.2rem' }}>
+                💡 {config.actionTip}
+              </p>
+            )}
+          </div>
+        ) : activeMode === 'simplissime' ? (
           <div className="q-card-simplissime-content">
             <div className="q-card-main-metric q-metric-simplissime">
               <span className="q-card-value">{config.primaryValue}</span>

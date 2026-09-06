@@ -41,6 +41,22 @@ export interface CardSparklineConfig {
   max?: number
 }
 
+export interface CardGaugeZone {
+  from: number
+  to: number
+  color: string
+  label?: string
+}
+
+export interface CardGaugeConfig {
+  min: number
+  max: number
+  current?: number
+  unit?: string
+  zones?: CardGaugeZone[]
+  showExtremes?: boolean
+}
+
 export interface SquareCardConfig {
   id: string
   title: string
@@ -58,6 +74,7 @@ export interface SquareCardConfig {
   viewMode?: CardViewMode
   subMetrics?: CardSubMetric[]
   sparkline?: number[] | CardSparklineConfig
+  gauge?: CardGaugeConfig
   timestamp?: number | string
   relativeTime?: string
   themeMode?: CardThemeMode

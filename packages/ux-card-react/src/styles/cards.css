@@ -564,8 +564,8 @@
 .q-card-sparkline-wrapper {
   display: flex;
   align-items: flex-end;
-  height: 32px;
-  width: 84px;
+  height: 28px;
+  width: 76px;
   flex-shrink: 0;
 }
 
@@ -573,6 +573,68 @@
   width: 100%;
   height: 100%;
   overflow: visible;
+}
+
+/* --------------------------------------------------------------------------
+   8. Gauge Card Component
+   -------------------------------------------------------------------------- */
+.q-card-gauge-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.1rem 0;
+}
+
+.q-card-gauge-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 124px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.q-card-gauge-svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.q-card-gauge-center {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  transform: translate(-50%, -15%);
+  display: flex;
+  align-items: baseline;
+  gap: 0.15rem;
+}
+
+.q-card-gauge-center .q-card-value {
+  font-size: 1.65rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.q-card-gauge-center .q-card-unit {
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.q-card-gauge-bounds {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 0.15rem;
+  margin-top: -0.1rem;
+}
+
+.q-card-gauge-bound {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--q-card-text-muted);
 }
 
 /* --------------------------------------------------------------------------
