@@ -1,0 +1,11 @@
+node_modules/
+coverage/
+*.test.ts
+*.test.tsx
+*.test.js
+*.test.d.ts
+*.test.d.ts.map
+*.test.js.map
+__tests__/
+tsconfig.tsbuildinfo
+.DS_Store

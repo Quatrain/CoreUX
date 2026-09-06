@@ -1,0 +1,32 @@
+{
+  "name": "@quatrain/ux-grid",
+  "version": "1.0.0-rc.1",
+  "description": "Universal responsive grid layout engine and draggable canvas manager for PWA, TV Kiosk and Web",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bun": "src/index.ts",
+  "license": "AGPL-3.0-only",
+  "files": [
+    "LICENSE.md",
+    "dist/",
+    "!dist/**/*.test.*",
+    "src/",
+    "!src/**/*.test.*",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Quatrain/CoreUX.git",
+    "directory": "packages/ux-grid"
+  },
+  "author": "Quatrain Développement SAS <developers@quatrain.com>",
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.1",
+    "@types/node": "^22.10.1",
+    "typescript": "^5.2.2"
+  },
+  "scripts": {
+    "build": "tsc",
+    "wbuild": "tsc --watch"
+  }
+}
