@@ -1,6 +1,6 @@
 {
   "name": "@quatrain/ux-react",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Quatrain React UX bindings and components",
   "main": "src/index.ts",
   "types": "src/index.ts",

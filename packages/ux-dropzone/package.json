@@ -1,6 +1,6 @@
 {
   "name": "@quatrain/ux-dropzone",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Multi-format file and document drag-and-drop ingestion component for Mantine UI",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

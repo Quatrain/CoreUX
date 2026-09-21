@@ -1,6 +1,6 @@
 {
   "name": "@quatrain/ux-card-react",
-  "version": "1.0.0-rc.8",
+  "version": "1.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "style": "dist/styles/cards.css",
@@ -19,9 +19,9 @@
     "react-dom": "^18.3.1"
   },
   "dependencies": {
-    "@quatrain/ux-card": "^1.0.0-rc.6",
-    "@quatrain/ux-grid": "^1.0.0-rc.1",
-    "@quatrain/ux-grid-react": "^1.0.0-rc.2"
+    "@quatrain/ux-card": "^1.0.0",
+    "@quatrain/ux-grid": "^1.0.0",
+    "@quatrain/ux-grid-react": "^1.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",

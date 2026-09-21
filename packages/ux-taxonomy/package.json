@@ -1,6 +1,6 @@
 {
   "name": "@quatrain/ux-taxonomy",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Headless taxonomy and thematic hierarchy controller with React Mantine components",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

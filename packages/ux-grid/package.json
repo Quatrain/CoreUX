@@ -1,6 +1,6 @@
 {
   "name": "@quatrain/ux-grid",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0",
   "description": "Universal responsive grid layout engine and draggable canvas manager for PWA, TV Kiosk and Web",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

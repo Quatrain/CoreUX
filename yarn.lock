@@ -861,9 +861,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@quatrain/ux-card-react@workspace:packages/ux-card-react"
   dependencies:
-    "@quatrain/ux-card": "npm:^1.0.0-rc.6"
-    "@quatrain/ux-grid": "npm:^1.0.0-rc.1"
-    "@quatrain/ux-grid-react": "npm:^1.0.0-rc.2"
+    "@quatrain/ux-card": "npm:^1.0.0"
+    "@quatrain/ux-grid": "npm:^1.0.0"
+    "@quatrain/ux-grid-react": "npm:^1.0.0"
     "@types/react": "npm:^18.3.3"
     "@types/react-dom": "npm:^18.3.0"
     react: "npm:^18.3.1"
@@ -875,7 +875,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@quatrain/ux-card@npm:^1.0.0-rc.6, @quatrain/ux-card@workspace:packages/ux-card":
+"@quatrain/ux-card@npm:^1.0.0, @quatrain/ux-card@workspace:packages/ux-card":
   version: 0.0.0-use.local
   resolution: "@quatrain/ux-card@workspace:packages/ux-card"
   dependencies:
@@ -951,11 +951,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@quatrain/ux-grid-react@npm:^1.0.0-rc.2, @quatrain/ux-grid-react@workspace:packages/ux-grid-react":
+"@quatrain/ux-grid-react@npm:^1.0.0, @quatrain/ux-grid-react@workspace:packages/ux-grid-react":
   version: 0.0.0-use.local
   resolution: "@quatrain/ux-grid-react@workspace:packages/ux-grid-react"
   dependencies:
-    "@quatrain/ux-grid": "npm:^1.0.0-rc.1"
+    "@quatrain/ux-grid": "npm:^1.0.0"
     "@types/react": "npm:^18.3.3"
     "@types/react-dom": "npm:^18.3.0"
     react: "npm:^18.3.1"
@@ -967,7 +967,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@quatrain/ux-grid@npm:^1.0.0-rc.1, @quatrain/ux-grid@workspace:packages/ux-grid":
+"@quatrain/ux-grid@npm:^1.0.0, @quatrain/ux-grid@workspace:packages/ux-grid":
   version: 0.0.0-use.local
   resolution: "@quatrain/ux-grid@workspace:packages/ux-grid"
   dependencies:
