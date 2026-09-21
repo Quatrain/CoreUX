@@ -1,0 +1,79 @@
+/* ==========================================================================
+   Quatrain CoreUX — Theme Pastel (Soft, desaturated, tinted domain colors)
+   ========================================================================== */
+
+/* Default fallback or explicit .q-palette-pastel / [data-card-palette="pastel"] */
+.q-square-card.q-domain-air,
+.q-palette-pastel .q-square-card.q-domain-air,
+.q-square-card.q-palette-pastel.q-domain-air,
+[data-card-palette="pastel"] .q-square-card.q-domain-air {
+  background: linear-gradient(150deg, #f0f9ff 0%, #e0f2fe 100%);
+  border-color: #7dd3fc;
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.12);
+}
+.q-square-card.q-domain-air .q-card-icon-badge,
+.q-palette-pastel .q-square-card.q-domain-air .q-card-icon-badge,
+[data-card-palette="pastel"] .q-square-card.q-domain-air .q-card-icon-badge {
+  background: #bae6fd;
+  color: #0284c7;
+}
+
+.q-square-card.q-domain-sol,
+.q-palette-pastel .q-square-card.q-domain-sol,
+.q-square-card.q-palette-pastel.q-domain-sol,
+[data-card-palette="pastel"] .q-square-card.q-domain-sol {
+  background: linear-gradient(150deg, #fffbeb 0%, #fef3c7 100%);
+  border-color: #fcd34d;
+  box-shadow: 0 4px 14px rgba(180, 83, 9, 0.12);
+}
+.q-square-card.q-domain-sol .q-card-icon-badge,
+.q-palette-pastel .q-square-card.q-domain-sol .q-card-icon-badge,
+[data-card-palette="pastel"] .q-square-card.q-domain-sol .q-card-icon-badge {
+  background: #fde68a;
+  color: #b45309;
+}
+
+.q-square-card.q-domain-lumiere,
+.q-palette-pastel .q-square-card.q-domain-lumiere,
+.q-square-card.q-palette-pastel.q-domain-lumiere,
+[data-card-palette="pastel"] .q-square-card.q-domain-lumiere {
+  background: linear-gradient(150deg, #fefce8 0%, #fef08a 100%);
+  border-color: #facc15;
+  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.12);
+}
+.q-square-card.q-domain-lumiere .q-card-icon-badge,
+.q-palette-pastel .q-square-card.q-domain-lumiere .q-card-icon-badge,
+[data-card-palette="pastel"] .q-square-card.q-domain-lumiere .q-card-icon-badge {
+  background: #fef08a;
+  color: #a16207;
+}
+
+.q-square-card.q-domain-sante,
+.q-palette-pastel .q-square-card.q-domain-sante,
+.q-square-card.q-palette-pastel.q-domain-sante,
+[data-card-palette="pastel"] .q-square-card.q-domain-sante {
+  background: linear-gradient(150deg, #f5f3ff 0%, #ede9fe 100%);
+  border-color: #c7d2fe;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.12);
+}
+.q-square-card.q-domain-sante .q-card-icon-badge,
+.q-palette-pastel .q-square-card.q-domain-sante .q-card-icon-badge,
+[data-card-palette="pastel"] .q-square-card.q-domain-sante .q-card-icon-badge {
+  background: #ddd6fe;
+  color: #4f46e5;
+}
+
+.q-square-card.q-domain-risque,
+.q-palette-pastel .q-square-card.q-domain-risque,
+.q-square-card.q-palette-pastel.q-domain-risque,
+[data-card-palette="pastel"] .q-square-card.q-domain-risque {
+  background: linear-gradient(150deg, #fff1f2 0%, #ffe4e6 100%);
+  border-color: #fecdd3;
+  box-shadow: 0 4px 14px rgba(225, 29, 72, 0.12);
+}
+.q-square-card.q-domain-risque .q-card-icon-badge,
+.q-palette-pastel .q-square-card.q-domain-risque .q-card-icon-badge,
+[data-card-palette="pastel"] .q-square-card.q-domain-risque .q-card-icon-badge {
+  background: #fecdd3;
+  color: #be123c;
+}

@@ -1,9 +1,10 @@
 {
-  "name": "@quatrain/ux-card-react",
-  "version": "1.0.0-rc.8",
+  "name": "@quatrain/ux-grid-react",
+  "version": "1.0.0-rc.2",
+  "description": "React components, responsive grid canvas and draggable layout engine for Quatrain UX",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "style": "dist/styles/cards.css",
+  "style": "dist/styles/grid.css",
   "bun": "src/index.ts",
   "license": "AGPL-3.0-only",
   "files": [
@@ -19,9 +20,7 @@
     "react-dom": "^18.3.1"
   },
   "dependencies": {
-    "@quatrain/ux-card": "^1.0.0-rc.6",
-    "@quatrain/ux-grid": "^1.0.0-rc.1",
-    "@quatrain/ux-grid-react": "^1.0.0-rc.2"
+    "@quatrain/ux-grid": "^1.0.0-rc.1"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
@@ -31,12 +30,12 @@
     "typescript": "^5.2.2"
   },
   "scripts": {
-    "build": "tsc && mkdir -p dist/styles && cp src/styles/*.css dist/styles/",
+    "build": "tsc && mkdir -p dist/styles && cp src/styles/grid.css dist/styles/grid.css",
     "wbuild": "tsc --watch"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Quatrain/CoreUX.git",
-    "directory": "packages/ux-card-react"
+    "directory": "packages/ux-grid-react"
   }
 }

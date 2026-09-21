@@ -1,0 +1,834 @@
+/* ==========================================================================
+   Quatrain CoreUX — Square Cards & Dashboard Grid Design System
+   ========================================================================== */
+
+:root {
+  --q-card-radius: 1rem;
+  --q-card-bg: rgba(255, 255, 255, 0.95);
+  --q-card-border: rgba(226, 232, 240, 0.85);
+  --q-card-text-primary: #0f172a;
+  --q-card-text-secondary: #64748b;
+  --q-card-text-muted: #94a3b8;
+  --q-card-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+  --q-card-shadow-hover: 0 12px 28px -4px rgba(0, 0, 0, 0.12);
+  --q-card-accent: #3b82f6;
+}
+
+/* --------------------------------------------------------------------------
+   1. Dashboard Wrapper & Toolbar
+   -------------------------------------------------------------------------- */
+.q-dashboard-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.q-dashboard-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  padding: 0.25rem 0.5rem;
+}
+
+.q-dashboard-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.q-mode-toggle-group {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 3px;
+  border-radius: 9999px;
+  backdrop-filter: blur(8px);
+}
+
+.q-mode-toggle-btn {
+  border: none;
+  background: transparent;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+
+.q-mode-toggle-btn.active {
+  background: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.q-category-filter-group {
+  display: inline-flex;
+  gap: 0.35rem;
+  overflow-x: auto;
+  padding: 0.2rem 0;
+  max-width: 100%;
+}
+
+.q-category-filter-btn {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #ffffff;
+  color: #64748b;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  padding: 0.3rem 0.7rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.q-category-filter-btn.active {
+  border-color: #3b82f6;
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.q-pinned-counter {
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   2. Grid Canvas Layout
+   -------------------------------------------------------------------------- */
+.q-dashboard-canvas,
+.q-grid-canvas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(175px, 215px));
+  gap: 0.65rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 1. Smartphone standard (<= 600px): 2 cards side-by-side */
+@media (max-width: 600px) {
+  .q-dashboard-canvas,
+  .q-grid-canvas {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 0.45rem !important;
+  }
+}
+
+/* 2. Large Smartphone landscape / Small Tablet (601px - 840px): 3 cards side-by-side */
+@media (min-width: 601px) and (max-width: 840px) {
+  .q-dashboard-canvas,
+  .q-grid-canvas {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.55rem;
+  }
+}
+
+/* 3. Tablet portrait (841px - 1000px): 4 cards per row */
+@media (min-width: 841px) and (max-width: 1000px) {
+  .q-dashboard-canvas,
+  .q-grid-canvas {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.6rem;
+  }
+}
+
+/* 4. Tablet landscape & Desktop (>= 1001px): 5 cards per row, capped at 215px max */
+@media (min-width: 1001px) {
+  .q-dashboard-canvas,
+  .q-grid-canvas {
+    grid-template-columns: repeat(5, minmax(0, 215px));
+    gap: 0.65rem;
+  }
+}
+
+.q-dashboard-grid-item,
+.q-grid-item {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+}
+
+/* --------------------------------------------------------------------------
+   3. Square Card Component (1:1 Aspect Ratio)
+   -------------------------------------------------------------------------- */
+.q-square-card {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0.65rem 0.72rem;
+  box-sizing: border-box;
+  background: var(--q-card-bg);
+  border: 1px solid var(--q-card-border);
+  border-radius: var(--q-card-radius);
+  box-shadow: var(--q-card-shadow);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  user-select: none;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+}
+
+.q-square-card:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: var(--q-card-shadow-hover);
+}
+
+.q-square-card.q-interactive {
+  cursor: pointer;
+}
+
+/* Mood & Status Background Accents */
+.q-square-card.status-optimal {
+  border-color: #86efac;
+}
+
+.q-square-card.status-warning {
+  border-color: #f59e0b !important;
+  border-width: 1.5px;
+  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.28);
+}
+.q-square-card.status-warning .q-card-badge {
+  background: #f59e0b;
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.q-square-card.status-alert {
+  background: linear-gradient(150deg, #fff1f2 0%, #fee2e2 100%) !important;
+  border-color: #ef4444 !important;
+  border-width: 2px;
+  box-shadow: 0 6px 22px rgba(239, 68, 68, 0.32);
+  animation: qPulseAlert 2.5s infinite ease-in-out;
+}
+.q-square-card.status-alert .q-card-badge {
+  background: #dc2626;
+  color: #ffffff;
+  font-weight: 800;
+}
+
+@keyframes qPulseAlert {
+  0%, 100% {
+    box-shadow: 0 4px 16px rgba(239, 68, 68, 0.25);
+  }
+  50% {
+    box-shadow: 0 6px 24px rgba(239, 68, 68, 0.45);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   4. Card Header (Zone 1 & 2)
+   -------------------------------------------------------------------------- */
+.q-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.35rem;
+  width: 100%;
+  min-width: 0;
+}
+
+.q-card-title-group {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+}
+
+.q-card-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.q-card-title {
+  font-size: 0.80rem;
+  font-weight: 700;
+  color: var(--q-card-text-primary);
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+  min-width: 0;
+}
+
+.q-card-scope-row {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  margin-top: 0.12rem;
+  flex-wrap: nowrap;
+}
+
+.q-card-scope-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(15, 23, 42, 0.14);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  border-radius: 9999px;
+  padding: 0.08rem 0.38rem;
+  font-size: 0.64rem;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  min-width: 0;
+  flex-shrink: 1;
+  letter-spacing: -0.01em;
+  transition: all 0.15s ease;
+}
+
+.q-card-scope-badge .q-card-scope-icon {
+  font-size: 0.64rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.q-card-scope-badge .q-card-scope-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.q-card-source-tag {
+  font-size: 0.60rem;
+  font-weight: 600;
+  color: var(--q-card-text-secondary);
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 0;
+}
+
+.q-theme-tv .q-card-scope-badge,
+[data-theme='dark'] .q-card-scope-badge {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: #f8fafc;
+}
+
+.q-card-source {
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: var(--q-card-text-secondary);
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 0.1rem;
+}
+
+.q-card-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  flex-shrink: 0;
+}
+
+.q-card-action-btn {
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 0.4rem;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  padding: 0;
+}
+
+.q-card-action-btn:hover {
+  background: rgba(0, 0, 0, 0.08);
+  transform: scale(1.05);
+}
+
+.q-card-pin-btn.is-pinned {
+  background: #fef3c7;
+  border-color: #fde68a;
+  color: #b45309;
+}
+
+.q-card-icon-badge {
+  font-size: 0.85rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 0.4rem;
+  background: rgba(0, 0, 0, 0.05);
+  flex-shrink: 0;
+}
+
+/* --------------------------------------------------------------------------
+   5. Card Body (Zone 3 & 4)
+   -------------------------------------------------------------------------- */
+.q-card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  padding: 0.15rem 0;
+  min-height: 0;
+}
+
+.q-card-simplissime-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.q-card-expert-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.18rem;
+}
+
+.q-card-action-tip {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #334155;
+  line-height: 1.25;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.q-card-main-metric {
+  display: flex;
+  align-items: baseline;
+  gap: 0.15rem;
+}
+
+.q-card-value {
+  font-size: 1.85rem;
+  font-weight: 900;
+  color: var(--q-card-text-primary);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.q-metric-simplissime .q-card-value {
+  font-size: 2.05rem;
+}
+
+.q-card-unit {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--q-card-text-secondary);
+}
+
+.q-card-extremes {
+  display: flex;
+  gap: 0.45rem;
+  margin-top: 0.12rem;
+}
+
+.q-card-extreme-item {
+  font-size: 0.72rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.q-card-extreme-max {
+  color: #dc2626;
+}
+
+.q-card-extreme-min {
+  color: #2563eb;
+}
+
+.q-card-stacked-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.q-card-stacked-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: 100%;
+}
+
+.q-card-stacked-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 0.4rem;
+  padding: 0.2rem 0.45rem;
+}
+
+.q-card-stacked-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.70rem;
+}
+
+.q-card-stacked-label {
+  color: var(--q-card-text-secondary);
+  font-weight: 600;
+}
+
+.q-card-stacked-val {
+  color: var(--q-card-text-primary);
+  font-weight: 800;
+}
+
+.q-card-stacked-bar {
+  height: 3.5px;
+  background: rgba(0, 0, 0, 0.07);
+  border-radius: 9999px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.q-card-stacked-fill {
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.3s ease;
+}
+
+/* --------------------------------------------------------------------------
+   6. Card Footer (Zone 5 & 6)
+   -------------------------------------------------------------------------- */
+.q-card-footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.35rem;
+  padding-top: 0.25rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.q-card-footer-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.18rem;
+}
+
+.q-card-time {
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: var(--q-card-text-muted);
+}
+
+.q-card-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.12rem 0.45rem;
+  border-radius: 9999px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.q-card-badge-optimal {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.q-card-badge-warning {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.q-card-badge-alert {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.q-card-badge-info {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.q-card-badge-neutral {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.q-card-sparkline-wrapper {
+  display: flex;
+  align-items: flex-end;
+  height: 28px;
+  width: 76px;
+  flex-shrink: 0;
+}
+
+.q-card-sparkline-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* --------------------------------------------------------------------------
+   8. Gauge Card Component
+   -------------------------------------------------------------------------- */
+.q-card-gauge-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.1rem 0;
+}
+
+.q-card-gauge-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 112px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.q-card-gauge-svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.q-card-gauge-center {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  transform: translate(-50%, -15%);
+  display: flex;
+  align-items: baseline;
+  gap: 0.12rem;
+}
+
+.q-card-gauge-center .q-card-value {
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.q-card-gauge-center .q-card-unit {
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.q-card-gauge-bounds {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 0.15rem;
+  margin-top: -0.1rem;
+}
+
+.q-card-gauge-bound {
+  font-size: 0.58rem;
+  font-weight: 700;
+  color: var(--q-card-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   7. Zoom Modal Overlay
+   -------------------------------------------------------------------------- */
+.q-zoom-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 1rem;
+  animation: qFadeIn 0.2s ease-out;
+}
+
+.q-zoom-modal-content {
+  background: #ffffff;
+  border-radius: 1.5rem;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  animation: qScaleUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.q-zoom-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.q-zoom-modal-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.q-zoom-modal-close {
+  background: rgba(0, 0, 0, 0.05);
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: 700;
+  color: #64748b;
+  transition: all 0.15s ease;
+}
+
+.q-zoom-modal-close:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: #0f172a;
+}
+
+.q-zoom-modal-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.q-zoom-modal-preview {
+  width: 280px;
+  max-width: 100%;
+}
+
+.q-zoom-modal-tip {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 0.85rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.85rem;
+  color: #334155;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@keyframes qFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes qScaleUp {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* --------------------------------------------------------------------------
+   9. Mobile Smartphone Standard Micro-Tuning (<= 600px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 600px) {
+  .q-square-card {
+    padding: 0.45rem 0.50rem;
+    border-radius: 0.75rem;
+    min-width: 0;
+    max-width: 100%;
+  }
+  .q-card-title {
+    font-size: 0.70rem;
+  }
+  .q-card-header-actions {
+    gap: 0.12rem;
+  }
+  .q-card-action-btn {
+    width: 17px;
+    height: 17px;
+    font-size: 0.52rem;
+    border-radius: 0.25rem;
+  }
+  .q-card-icon-badge {
+    width: 17px;
+    height: 17px;
+    font-size: 0.72rem;
+  }
+  .q-card-scope-badge {
+    font-size: 0.55rem;
+    padding: 0.05rem 0.25rem;
+  }
+  .q-card-scope-badge .q-card-scope-icon {
+    font-size: 0.55rem;
+  }
+  .q-card-value {
+    font-size: 1.45rem;
+  }
+  .q-metric-simplissime .q-card-value {
+    font-size: 1.60rem;
+  }
+  .q-card-unit {
+    font-size: 0.70rem;
+  }
+  .q-card-action-tip {
+    font-size: 0.60rem;
+    line-height: 1.15;
+  }
+  .q-card-time {
+    font-size: 0.55rem;
+  }
+  .q-card-badge {
+    font-size: 0.55rem;
+    padding: 0.08rem 0.30rem;
+  }
+  .q-card-sparkline-wrapper {
+    width: 38px;
+    height: 16px;
+  }
+  .q-card-gauge-wrapper {
+    max-width: 88px;
+  }
+  .q-card-gauge-center .q-card-value {
+    font-size: 1.05rem;
+  }
+  .q-card-gauge-center .q-card-unit {
+    font-size: 0.60rem;
+  }
+  .q-card-gauge-bound {
+    font-size: 0.50rem;
+  }
+}
+

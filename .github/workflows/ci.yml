@@ -37,13 +37,6 @@ jobs:
           path: CoreUX
           fetch-depth: 0 # Disable shallow clone for accurate SonarQube blame/authorship
 
-      - name: Checkout Core
-        uses: actions/checkout@v4
-        with:
-          repository: Quatrain/Core
-          path: Core
-          fetch-depth: 1
-
       - name: Enable Corepack
         run: corepack enable
 
@@ -53,14 +46,6 @@ jobs:
           node-version: 22
           cache: 'yarn'
           cache-dependency-path: CoreUX/yarn.lock
-
-      - name: Install Core dependencies
-        run: YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
-        working-directory: Core
-
-      - name: Build Core monorepo packages
-        run: yarn build
-        working-directory: Core
 
       - name: Install CoreUX dependencies
         run: YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
@@ -108,13 +93,6 @@ jobs:
           path: CoreUX
           fetch-depth: 0
 
-      - name: Checkout Core
-        uses: actions/checkout@v4
-        with:
-          repository: Quatrain/Core
-          path: Core
-          fetch-depth: 1
-
       - name: Enable Corepack
         run: corepack enable
 
@@ -124,14 +102,6 @@ jobs:
           node-version: 22
           cache: 'yarn'
           cache-dependency-path: CoreUX/yarn.lock
-
-      - name: Install Core dependencies
-        run: YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
-        working-directory: Core
-
-      - name: Build Core monorepo packages
-        run: yarn build
-        working-directory: Core
 
       - name: Install CoreUX dependencies
         run: YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install

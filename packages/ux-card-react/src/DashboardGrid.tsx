@@ -1,79 +1,110 @@
 import React, { useState } from 'react'
-import { SquareCardConfig, CardThemeMode } from '@quatrain/ux-card'
+import { SquareCardConfig, CardThemeMode, CardViewMode, CardPaletteMode } from '@quatrain/ux-card'
+import { ResponsiveGrid, GridCategoryItem, GridModal } from '@quatrain/ux-grid-react'
 import { SquareCard } from './SquareCard'
+import '@quatrain/ux-grid-react/dist/styles/grid.css'
 
 export interface DashboardGridProps {
   cards: SquareCardConfig[]
   themeMode?: CardThemeMode
+  palette?: CardPaletteMode
   isEditable?: boolean
+  defaultViewMode?: CardViewMode
+  showToolbar?: boolean
+  categories?: GridCategoryItem[]
+  pinnedCardIds?: string[]
   onReorder?: (newOrder: string[]) => void
+  onTogglePin?: (card: SquareCardConfig) => void
   onZoomCard?: (card: SquareCardConfig) => void
   onCardClick?: (card: SquareCardConfig) => void
   className?: string
+  style?: React.CSSProperties
 }
 
 export const DashboardGrid: React.FC<DashboardGridProps> = ({
   cards,
   themeMode = 'web',
+  palette = 'pastel',
   isEditable = true,
+  defaultViewMode = 'simplissime',
+  showToolbar = true,
+  categories,
+  pinnedCardIds = [],
   onReorder,
+  onTogglePin,
   onZoomCard,
   onCardClick,
   className = '',
+  style,
 }) => {
-  const [draggedCardId, setDraggedCardId] = useState<string | null>(null)
+  const [globalMode, setGlobalMode] = useState<CardViewMode>(defaultViewMode)
+  const [cardOverrides, setCardOverrides] = useState<Record<string, CardViewMode>>({})
+  const [zoomedCard, setZoomedCard] = useState<SquareCardConfig | null>(null)
 
-  const handleDragStart = (e: React.DragEvent, cardId: string) => {
-    if (!isEditable) return
-    setDraggedCardId(cardId)
-    e.dataTransfer.setData('text/plain', cardId)
-    e.dataTransfer.effectAllowed = 'move'
+  const toggleCardMode = (cardId: string, currentMode: CardViewMode) => {
+    const nextMode: CardViewMode = currentMode === 'simplissime' ? 'expert' : 'simplissime'
+    setCardOverrides((prev) => ({ ...prev, [cardId]: nextMode }))
   }
 
-  const handleDragOver = (e: React.DragEvent) => {
-    if (!isEditable) return
-    e.preventDefault()
-    e.dataTransfer.dropEffect = 'move'
-  }
-
-  const handleDrop = (e: React.DragEvent, targetCardId: string) => {
-    if (!isEditable || !draggedCardId || draggedCardId === targetCardId) return
-    e.preventDefault()
-
-    const currentOrder = cards.map((c) => c.id)
-    const fromIndex = currentOrder.indexOf(draggedCardId)
-    const toIndex = currentOrder.indexOf(targetCardId)
-
-    if (fromIndex !== -1 && toIndex !== -1) {
-      const newOrder = [...currentOrder]
-      const [removed] = newOrder.splice(fromIndex, 1)
-      newOrder.splice(toIndex, 0, removed)
-
-      if (onReorder) {
-        onReorder(newOrder)
-      }
-    }
-    setDraggedCardId(null)
+  const handleZoom = (card: SquareCardConfig) => {
+    setZoomedCard(card)
+    if (onZoomCard) onZoomCard(card)
   }
 
   return (
-    <div className={`q-dashboard-canvas q-theme-${themeMode} ${className}`}>
-      {cards.map((card) => (
-        <div
-          key={card.id}
-          className="q-dashboard-grid-item"
-          draggable={isEditable}
-          onDragStart={(e) => handleDragStart(e, card.id)}
-          onDragOver={handleDragOver}
-          onDrop={(e) => handleDrop(e, card.id)}
-        >
-          <SquareCard
-            config={{ ...card, themeMode }}
-            onZoom={onZoomCard}
-            onCardClick={onCardClick}
-          />
-        </div>
-      ))}
-    </div>
+    <>
+      <ResponsiveGrid
+        items={cards}
+        themeMode={themeMode}
+        isEditable={isEditable}
+        defaultViewMode={defaultViewMode}
+        showToolbar={showToolbar}
+        categories={categories}
+        pinnedItemIds={pinnedCardIds}
+        onReorder={onReorder}
+        onModeChange={(m) => {
+          setGlobalMode(m as CardViewMode)
+          setCardOverrides({})
+        }}
+        className={`q-palette-${palette} ${className}`}
+        style={style}
+        renderItem={(card) => {
+          const effectiveMode = cardOverrides[card.id] || card.viewMode || globalMode
+          const isPinned = pinnedCardIds.includes(card.id) || Boolean(card.isPinned)
+
+          return (
+            <SquareCard
+              config={{ ...card, isPinned, themeMode }}
+              viewMode={effectiveMode}
+              palette={card.palette || palette}
+              onToggleMode={toggleCardMode}
+              onTogglePin={onTogglePin}
+              onZoom={handleZoom}
+              onCardClick={onCardClick}
+            />
+          )
+        }}
+      />
+
+      <GridModal
+        isOpen={Boolean(zoomedCard)}
+        title={zoomedCard?.zoomTitle || zoomedCard?.title}
+        onClose={() => setZoomedCard(null)}
+      >
+        {zoomedCard && (
+          <>
+            <div className="q-zoom-modal-preview">
+              <SquareCard config={zoomedCard} viewMode="expert" className="q-zoom-card-instance" />
+            </div>
+            {zoomedCard.actionTip && (
+              <div className="q-zoom-modal-tip">
+                <strong>Conseil : </strong>
+                <span>{zoomedCard.actionTip}</span>
+              </div>
+            )}
+          </>
+        )}
+      </GridModal>
+    </>
   )
 }

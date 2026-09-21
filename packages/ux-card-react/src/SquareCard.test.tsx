@@ -1,4 +1,3 @@
-import { describe, expect, test } from 'bun:test'
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { SquareCard } from './SquareCard'
@@ -38,4 +37,28 @@ describe('SquareCard React Decorator', () => {
     expect(html).toContain('data-zoom-type="chart"')
     expect(html).toContain('q-theme-pwa')
   })
+
+  test('renders simplissime mode with actionTip correctly', () => {
+    const config: SquareCardConfig = {
+      id: 'soil-1',
+      title: 'Sol : Humidité',
+      sourceName: 'Sonde Nord',
+      icon: '🌱',
+      primaryValue: '42',
+      unit: '%',
+      actionTip: 'Confort hydrique optimal, pas de stress',
+      viewMode: 'simplissime',
+      interpretation: {
+        label: 'Confort',
+        status: 'optimal',
+      },
+    }
+
+    const html = renderToString(<SquareCard config={config} />)
+    expect(html).toContain('Sol : Humidité')
+    expect(html).toContain('Confort hydrique optimal, pas de stress')
+    expect(html).toContain('q-card-simplissime')
+    expect(html).toContain('status-optimal')
+  })
 })
+

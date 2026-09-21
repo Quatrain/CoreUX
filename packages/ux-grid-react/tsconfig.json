@@ -7,13 +7,9 @@
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "baseUrl": ".",
     "paths": {
-      "@quatrain/ux-card": ["../ux-card/dist/index"],
-      "@quatrain/ux-grid": ["../ux-grid/dist/index"],
-      "@quatrain/ux-grid-react": ["../ux-grid-react/dist/index"]
+      "@quatrain/ux-grid": ["../ux-grid/dist/index"]
     }
   },
-
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "src/**/*.test.ts", "src/**/*.test.tsx"]
 }
-
