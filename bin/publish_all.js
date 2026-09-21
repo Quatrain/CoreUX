@@ -158,6 +158,15 @@ async function publishAll() {
                     }
                 });
 
+                // Ensure repository metadata exists for Sigstore provenance verification
+                if (!updatedPkgJson.repository || !updatedPkgJson.repository.url) {
+                    updatedPkgJson.repository = {
+                        type: 'git',
+                        url: 'git+https://github.com/Quatrain/CoreUX.git',
+                        directory: `packages/${pkg}`
+                    };
+                }
+
                 try {
                     // Temporarily write the versioned + stripped file
                     fs.writeFileSync(pkgJsonPath, JSON.stringify(updatedPkgJson, null, 2), 'utf8');
