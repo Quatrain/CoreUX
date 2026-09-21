@@ -19,7 +19,7 @@
   "dependencies": {
     "@mantine/core": "^7.10.0",
     "@mantine/hooks": "^7.10.0",
-    "@quatrain/types": "workspace:*",
+    "@quatrain/types": "^1.2.18",
     "@tabler/icons-react": "^3.5.0"
   },
   "devDependencies": {
