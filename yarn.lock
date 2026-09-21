@@ -803,59 +803,67 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@quatrain/core@portal:../Core/packages/core::locator=core-ux-monorepo%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@quatrain/core@portal:../Core/packages/core::locator=core-ux-monorepo%40workspace%3A."
+"@quatrain/core@npm:*":
+  version: 1.2.19
+  resolution: "@quatrain/core@npm:1.2.19"
   dependencies:
-    "@quatrain/log": "workspace:*"
-    "@quatrain/types": "workspace:*"
+    "@quatrain/log": "npm:^1.2.6"
+    "@quatrain/types": "npm:^1.2.18"
     node-persist: "npm:^4.0.4"
     which: "npm:^5.0.0"
+  checksum: 10c0/c6082a3b9e401773dd4f298d5111aa4466749bf10a00a823b790c5fd4422ff7a5eacd2f88de999b0e644a4999fd5fd717bdcfa0961f68c67757ad359971ad280
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@quatrain/i18n-en@portal:../Core/packages/i18n-en::locator=core-ux-monorepo%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@quatrain/i18n-en@portal:../Core/packages/i18n-en::locator=core-ux-monorepo%40workspace%3A."
+"@quatrain/i18n-en@npm:*":
+  version: 1.0.7
+  resolution: "@quatrain/i18n-en@npm:1.0.7"
   dependencies:
-    "@quatrain/i18n": "workspace:*"
+    "@quatrain/i18n": "npm:^1.0.10"
+  checksum: 10c0/dbb77f7c0d4d0e7822a11b7f2729f10cd5f59befa30b74aaeda44bde3f66cf44017add994e98c02687e81249a83dabcd716a0484a756c17c1d10706b1c787670
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@quatrain/i18n-fr@portal:../Core/packages/i18n-fr::locator=core-ux-monorepo%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@quatrain/i18n-fr@portal:../Core/packages/i18n-fr::locator=core-ux-monorepo%40workspace%3A."
+"@quatrain/i18n-fr@npm:*":
+  version: 1.0.7
+  resolution: "@quatrain/i18n-fr@npm:1.0.7"
   dependencies:
-    "@quatrain/i18n": "workspace:*"
+    "@quatrain/i18n": "npm:^1.0.10"
+  checksum: 10c0/2ddb3d386bb61bc09b431bbccf1c6d0f942cd6d9cc0a3513e59a7df8c5555451e054f70855dd933620c5a22e45d026df67c698297003b7a1137766e8ae57cb11
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@quatrain/i18n@portal:../Core/packages/i18n::locator=core-ux-monorepo%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@quatrain/i18n@portal:../Core/packages/i18n::locator=core-ux-monorepo%40workspace%3A."
+"@quatrain/i18n@npm:*, @quatrain/i18n@npm:^1.0.10":
+  version: 1.0.11
+  resolution: "@quatrain/i18n@npm:1.0.11"
+  checksum: 10c0/d8026d21189693461fe8f540027c135a28aa88c6cbed6e4b9491545204202910b832481f96f4bbf7a12fc419f78a700e80c76987190f4d13ea6030f2d9859b4f
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@quatrain/log@portal:../Core/packages/log::locator=core-ux-monorepo%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@quatrain/log@portal:../Core/packages/log::locator=core-ux-monorepo%40workspace%3A."
+"@quatrain/log@npm:^1.2.6":
+  version: 1.2.6
+  resolution: "@quatrain/log@npm:1.2.6"
   dependencies:
     chalk: "npm:^4.1.2"
     loglevel: "npm:^1.9.2"
+  checksum: 10c0/4aa15c6342fa11fd268801c763ece7383b592d2549cd03de111feec11bcb2b5d234d3be2402d81cd94578ab537809d7e14b83deec8abc00093c57925c1ee69ab
   languageName: node
-  linkType: soft
+  linkType: hard
 
-"@quatrain/types@portal:../Core/packages/types::locator=core-ux-monorepo%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@quatrain/types@portal:../Core/packages/types::locator=core-ux-monorepo%40workspace%3A."
+"@quatrain/types@npm:^1.2.18":
+  version: 1.2.18
+  resolution: "@quatrain/types@npm:1.2.18"
+  checksum: 10c0/d33e40b307fbab5374f0113753be46900897771ca1e17874c182e52cdf4aa8cdab30f2c4a28b07e47dc37e3981d601cddb678c0f6e5b9d806421272526ce5c45
   languageName: node
-  linkType: soft
+  linkType: hard
 
 "@quatrain/ux-card-react@workspace:packages/ux-card-react":
   version: 0.0.0-use.local
   resolution: "@quatrain/ux-card-react@workspace:packages/ux-card-react"
   dependencies:
-    "@quatrain/ux-card": "npm:^1.0.0-rc.1"
+    "@quatrain/ux-card": "npm:^1.0.0-rc.6"
+    "@quatrain/ux-grid": "npm:^1.0.0-rc.1"
+    "@quatrain/ux-grid-react": "npm:^1.0.0-rc.2"
     "@types/react": "npm:^18.3.3"
     "@types/react-dom": "npm:^18.3.0"
     react: "npm:^18.3.1"
@@ -867,7 +875,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@quatrain/ux-card@npm:^1.0.0-rc.1, @quatrain/ux-card@workspace:packages/ux-card":
+"@quatrain/ux-card@npm:^1.0.0-rc.6, @quatrain/ux-card@workspace:packages/ux-card":
   version: 0.0.0-use.local
   resolution: "@quatrain/ux-card@workspace:packages/ux-card"
   dependencies:
@@ -883,7 +891,7 @@ __metadata:
   dependencies:
     "@mantine/core": "npm:^7.10.0"
     "@mantine/hooks": "npm:^7.10.0"
-    "@quatrain/types": "workspace:*"
+    "@quatrain/types": "npm:^1.2.18"
     "@quatrain/ux-taxonomy": "workspace:*"
     "@tabler/icons-react": "npm:^3.5.0"
     "@types/jest": "npm:^29.5.12"
@@ -907,7 +915,7 @@ __metadata:
     "@mantine/core": "npm:^7.10.0"
     "@mantine/dropzone": "npm:^7.10.0"
     "@mantine/hooks": "npm:^7.10.0"
-    "@quatrain/types": "workspace:*"
+    "@quatrain/types": "npm:^1.2.18"
     "@tabler/icons-react": "npm:^3.5.0"
     "@types/jest": "npm:^29.5.12"
     "@types/react": "npm:^18.3.3"
@@ -943,7 +951,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@quatrain/ux-grid-react@workspace:packages/ux-grid-react":
+"@quatrain/ux-grid-react@npm:^1.0.0-rc.2, @quatrain/ux-grid-react@workspace:packages/ux-grid-react":
   version: 0.0.0-use.local
   resolution: "@quatrain/ux-grid-react@workspace:packages/ux-grid-react"
   dependencies:
@@ -1014,7 +1022,7 @@ __metadata:
   dependencies:
     "@mantine/core": "npm:^7.10.0"
     "@mantine/hooks": "npm:^7.10.0"
-    "@quatrain/types": "workspace:*"
+    "@quatrain/types": "npm:^1.2.18"
     "@tabler/icons-react": "npm:^3.5.0"
     "@types/jest": "npm:^29.5.12"
     "@types/react": "npm:^18.3.3"

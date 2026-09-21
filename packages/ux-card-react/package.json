@@ -23,7 +23,6 @@
     "@quatrain/ux-grid": "^1.0.0-rc.1",
     "@quatrain/ux-grid-react": "^1.0.0-rc.2"
   },
-
   "devDependencies": {
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
