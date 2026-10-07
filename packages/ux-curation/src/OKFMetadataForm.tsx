@@ -59,6 +59,8 @@ export interface OKFDocumentMetadata {
   properNouns?: string[]
   timestamp?: string
   documentDate?: string
+  license?: string
+  copyright?: string
   originalFileUri?: string
   fileHash?: string
   source?: string
@@ -117,6 +119,8 @@ export const OKFMetadataForm: React.FC<OKFMetadataFormProps> = ({
   const [revision, setRevision] = useState(initialValues.revision || 'rev-1.0.0')
   const [source, setSource] = useState(initialValues.source || '')
   const [documentDate, setDocumentDate] = useState(initialValues.documentDate || '')
+  const [license, setLicense] = useState(initialValues.license || '')
+  const [copyright, setCopyright] = useState(initialValues.copyright || '')
 
   const handleAxisChange = (axisId: string, values: string[]) => {
     setAxisValues((prev) => ({
@@ -154,6 +158,8 @@ ${latitudes.length > 0 ? `latitudes:\n${latitudes.map((l) => `  - ${l}`).join('\
 ${altitudes.length > 0 ? `altitudes:\n${altitudes.map((a) => `  - ${a}`).join('\n')}` : ''}
 ${documentDate ? `documentDate: "${documentDate}"` : ''}
 ${source ? `source: "${source.replace(/"/g, '\\"')}"` : ''}
+${license ? `license: "${license.replace(/"/g, '\\"')}"` : ''}
+${copyright ? `copyright: "${copyright.replace(/"/g, '\\"')}"` : ''}
 timestamp: "${initialValues.timestamp || new Date().toISOString()}"
 ---`
 
@@ -179,6 +185,8 @@ timestamp: "${initialValues.timestamp || new Date().toISOString()}"
       properNouns: initialValues.properNouns || [],
       source,
       documentDate,
+      license,
+      copyright,
       timestamp: initialValues.timestamp || new Date().toISOString(),
       originalFileUri: initialValues.originalFileUri,
       fileHash: initialValues.fileHash,
@@ -280,6 +288,24 @@ timestamp: "${initialValues.timestamp || new Date().toISOString()}"
                   value={revision}
                   onChange={(e) => setRevision(e.currentTarget.value)}
                   required
+                />
+              </Group>
+
+              <Group grow>
+                <TextInput
+                  label="Licence / Science Ouverte (license)"
+                  description="Identifiant SPDX (ex: CC-BY-4.0, CC-BY-SA-4.0, CC0-1.0, Open Access, Propriétaire)"
+                  placeholder="CC-BY-4.0"
+                  value={license}
+                  onChange={(e) => setLicense(e.currentTarget.value)}
+                />
+
+                <TextInput
+                  label="Copyright / Droits d'auteur (copyright)"
+                  description="Mention légale d'attribution et titulaires"
+                  placeholder="© 2024 Éditions France Agricole"
+                  value={copyright}
+                  onChange={(e) => setCopyright(e.currentTarget.value)}
                 />
               </Group>
 
