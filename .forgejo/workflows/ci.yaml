@@ -1,0 +1,50 @@
+name: Quatrain CoreUX Sovereign CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - 'feat/**'
+  pull_request:
+    branches:
+      - main
+      - develop
+  workflow_dispatch:
+
+jobs:
+  ci:
+    name: CoreUX Monorepo Build & Unit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Enable Corepack & Verify Yarn
+        run: |
+          echo "Node.js version: $(node -v)"
+          corepack enable
+          yarn --version
+
+      - name: Install System Build Prerequisites
+        run: |
+          echo "=== Installing system build tools ==="
+          apt-get update -qq && apt-get install -y -qq python3 make g++
+
+      - name: Install Monorepo Dependencies
+        run: |
+          echo "=== Installing dependencies ==="
+          YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
+
+      - name: Build Monorepo (Turbo)
+        run: |
+          echo "=== Building CoreUX monorepo packages ==="
+          yarn build
+
+      - name: Run Unit Tests
+        run: |
+          echo "=== Executing CoreUX unit tests ==="
+          yarn test
