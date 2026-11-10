@@ -1,5 +1,8 @@
 # Core UX - Frontend Architecture & UX Brick System for Quatrain
 
+> [!IMPORTANT]
+> The source of authority is **[git.qtrn.io/quatrain/core-ux](https://git.qtrn.io/quatrain/core-ux)**: issues, pull requests, wiki and CI live there. `github.com/Quatrain/CoreUX` is a read-only mirror.
+
 Core UX is the frontend companion monorepo of the **Quatrain** ecosystem. It provides headless state controllers, React bindings, and UI components built on top of **Mantine UI**. 
 
 Following a strict **MVC (Model-View-Controller)** pattern, CoreUX decouples business logic, data validation, and visual rendering. Heavy state management, filtering, and model handling reside in headless, framework-agnostic controllers, keeping your React components lightweight, pure, and easy to maintain.

@@ -6,7 +6,7 @@
   "types": "src/index.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Quatrain/CoreUX.git",
+    "url": "git+https://git.qtrn.io/quatrain/core-ux.git",
     "directory": "packages/ux-react"
   },
   "author": "Quatrain Développement SAS <developers@quatrain.com>",

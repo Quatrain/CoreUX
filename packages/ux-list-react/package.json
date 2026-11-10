@@ -28,7 +28,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Quatrain/CoreUX.git",
+    "url": "git+https://git.qtrn.io/quatrain/core-ux.git",
     "directory": "packages/ux-list-react"
   }
 }

@@ -48,3 +48,55 @@ jobs:
         run: |
           echo "=== Executing CoreUX unit tests ==="
           yarn test
+
+  publish:
+    name: Publish Changed Packages to npm
+    needs: ci
+    runs-on: ubuntu-latest
+    # Releases ship from main only (dist-tag `latest`), as before the GitHub decommissioning.
+    if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install System Build Prerequisites
+        run: apt-get update -qq && apt-get install -y -qq python3 make g++
+
+      - name: Install Monorepo Dependencies
+        run: YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
+
+      - name: Authenticate with npmjs
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          if [ -z "$NPM_TOKEN" ]; then
+            echo "Repository secret NPM_TOKEN is missing (Settings > Actions > Secrets)." >&2
+            exit 1
+          fi
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+
+      - name: Sync with remote before publish
+        run: |
+          git config --global user.name "forgejo-actions"
+          git config --global user.email "forgejo-actions@git.qtrn.io"
+          git pull --rebase origin "${GITHUB_REF_NAME}" --autostash
+
+      - name: Publish changed packages
+        run: yarn publish:all
+
+      - name: Commit version bumps and hashes
+        run: |
+          git pull --rebase origin "${GITHUB_REF_NAME}" --autostash
+          git add -A packages/*/package.json .version_hashes.json
+          if git diff --cached --quiet; then
+            echo "No version bump to commit."
+            exit 0
+          fi
+          git commit --no-verify -m "chore: release versions & update hashes [skip ci]"
+          git push --no-verify origin "HEAD:${GITHUB_REF_NAME}"
