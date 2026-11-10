@@ -12,6 +12,18 @@ function runSync(command, args, options = {}) {
     return result.stdout ? result.stdout.toString() : '';
 }
 
+/**
+ * True only on genuine GitHub Actions runners. Forgejo and Gitea runners also set
+ * GITHUB_ACTIONS=true for compatibility, but npm provenance and GitHub Packages
+ * are unavailable there.
+ */
+const isGitHubRunner = Boolean(process.env.GITHUB_ACTIONS)
+    && !process.env.FORGEJO_ACTIONS
+    && !process.env.GITEA_ACTIONS;
+
+/** GitHub Packages mirroring is opt-in outside GitHub runners (PUBLISH_GITHUB_PACKAGES=true). */
+const publishToGitHubPackages = isGitHubRunner || process.env.PUBLISH_GITHUB_PACKAGES === 'true';
+
 const workspacesDirs = [
     path.join(__dirname, '../packages')
 ];
@@ -162,7 +174,7 @@ async function publishAll() {
                 if (!updatedPkgJson.repository || !updatedPkgJson.repository.url) {
                     updatedPkgJson.repository = {
                         type: 'git',
-                        url: 'git+https://github.com/Quatrain/CoreUX.git',
+                        url: 'git+https://git.qtrn.io/quatrain/core-ux.git',
                         directory: `packages/${pkg}`
                     };
                 }
@@ -183,7 +195,8 @@ async function publishAll() {
                     } catch (e) { /* ignores 404 */ }
 
                     if (!existsNpmjs) {
-                        let publishArgsNpm = ['publish', 'package.tgz', '--registry', 'https://registry.npmjs.org/', '--access', 'public', '--provenance'];
+                        let publishArgsNpm = ['publish', 'package.tgz', '--registry', 'https://registry.npmjs.org/', '--access', 'public'];
+                        if (isGitHubRunner) publishArgsNpm.push('--provenance');
                         if (npmTag) publishArgsNpm.push('--tag', npmTag);
                         runSync('npm', publishArgsNpm, { cwd: pkgDir, stdio: 'inherit' });
                     } else {
@@ -191,17 +204,19 @@ async function publishAll() {
                     }
 
                     // Publish to GitHub Packages
-                    let existsGithub = false;
-                    try {
-                        const out = runSync('npm', ['view', `${pkgName}@${newVersion}`, 'version', '--registry', 'https://npm.pkg.github.com/'], { cwd: pkgDir, stdio: 'pipe' }).trim();
-                        if (out === newVersion) existsGithub = true;
-                    } catch (e) { /* ignores 404 */ }
+                    let existsGithub = !publishToGitHubPackages;
+                    if (publishToGitHubPackages) {
+                        try {
+                            const out = runSync('npm', ['view', `${pkgName}@${newVersion}`, 'version', '--registry', 'https://npm.pkg.github.com/'], { cwd: pkgDir, stdio: 'pipe' }).trim();
+                            if (out === newVersion) existsGithub = true;
+                        } catch (e) { /* ignores 404 */ }
+                    }
 
                     if (!existsGithub) {
                         let publishArgsGh = ['publish', 'package.tgz', '--registry', 'https://npm.pkg.github.com/'];
                         if (npmTag) publishArgsGh.push('--tag', npmTag);
                         runSync('npm', publishArgsGh, { cwd: pkgDir, stdio: 'inherit' });
-                    } else {
+                    } else if (publishToGitHubPackages) {
                         console.log(`[PUBLISH] ${pkgName}@${newVersion} already exists on GitHub Packages, skipping.`);
                     }
                 } finally {
@@ -230,7 +245,9 @@ async function publishAll() {
             if (npmTag && npmTag !== 'latest') {
                 try {
                     runSync('npm', ['dist-tag', 'add', `${pkgName}@${previousData.version}`, npmTag, '--registry', 'https://registry.npmjs.org/'], { stdio: 'ignore' });
-                    runSync('npm', ['dist-tag', 'add', `${pkgName}@${previousData.version}`, npmTag, '--registry', 'https://npm.pkg.github.com/'], { stdio: 'ignore' });
+                    if (publishToGitHubPackages) {
+                        runSync('npm', ['dist-tag', 'add', `${pkgName}@${previousData.version}`, npmTag, '--registry', 'https://npm.pkg.github.com/'], { stdio: 'ignore' });
+                    }
                     console.log(`[PUBLISH] Tagged existing version ${pkgName}@${previousData.version} with ${npmTag}`);
                 } catch (e) {
                     // Ignore if already tagged or unauthorized

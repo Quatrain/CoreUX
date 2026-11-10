@@ -37,4 +37,6 @@ When building or updating UI components, cards, forms, and grid layouts in CoreU
 
 - **Default Branch**: Branch out from `develop`: `feat/<issue-id>-<description>` or `fix/...`
 - **Conventional Commits**: Format `<type>(<scope>): <summary>` in International English.
-- **Pull Requests**: Target `develop`, include closing keywords (`Closes #<issue-id>`).
+- **Pull Requests**: Open on Forgejo, target `develop`, include closing keywords (`Closes #<issue-id>`).
+- **Source of Authority**: `git.qtrn.io/quatrain/core-ux` (git remote `sovereign`). `github.com/Quatrain/CoreUX` is a read-only push mirror refreshed on every push: never push, open issues or open pull requests there. The `gh` CLI does not apply; use the Forgejo API with a personal access token (`write:issue`, `write:repository`).
+- **npm Publication**: Forgejo Actions (`.forgejo/workflows/ci.yaml`, job `publish`) runs `bin/publish_all.js` after a green CI on `main`, then commits version bumps with `[skip ci]`. The repository secret `NPM_TOKEN` must be set.
